@@ -1,1 +1,41 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'VCR_OSD_MONO_1.001';
+  src: url('/fonts/VCR_OSD_MONO_1.001.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {  --background-color: oklch(17.76% 0 0); }
+
+@theme inline {
+  
+    /* FONT TESTING */
+    
+    --font-sharetech: 'Share Tech Mono', monospace;
+    --font-vcr: "vcr-ost-mono", monospace
+  }
+  
+
+/*   @font-face {  font-family: Oswald;  font-style: normal;  font-weight: 200 700;  font-display: swap;  src: url("/fonts/Oswald.woff2") format("woff2");}
+
+ */
+  
+
+
+/* @font-face {
+  font-family: 'Proxima Nova';
+  src: url('/fonts/proxima-nova/proximanova_bold.ttf') format('truetype'),
+       url('/fonts/proxima-nova/proximanova_bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('/fonts/proxima-nova/proximanova_light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+ */
