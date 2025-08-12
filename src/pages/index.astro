@@ -27,17 +27,25 @@ import "@fontsource/share-tech-mono";
 
     <nav class="flex flex-col justify-between h-full">
       <div
-        class="flex flex-col gap-12 justify-start items-center py-14 h-full relative font-vcr text-lg"
+        class="flex flex-col gap-12 justify-start items-center py-14 h-full relative font-vcr text-lg uppercase font-bold tracking-wider"
       >
         <!--  <div class="bg-white w-[2px] h-full rounded-tl-[244px] rounded-br-[200px]"></div> -->
         <span class="rotate-270">Projects</span>
+        <!-- <span class="rotate-270">Experience</span> -->
         <span class="rotate-270">Me</span>
       </div>
 
-      <div class="flex items-center justify-center gap-1.5 rotate-270 mb-2">
-        <div class="w-[3px] bg-white h-6 rotate-20"></div>
-        <div class="w-[3px] bg-white h-6 rotate-20"></div>
-        <!--   <span class="relative left-3 font-bold font-vcr  text-sm tracking-wider">Zakiel</span> -->
+      <div
+        class="relative flex items-center justify-center gap-1.5 rotate-270 mb-2"
+      >
+        <div class="w-[3px] bg-white h-5 rotate-20"></div>
+        <div class="w-[3px] bg-white h-5 rotate-20"></div>
+        <div
+          class="left-15 font-bold font-vcr uppercase tracking-wider absolute text-xl flex gap-3"
+        >
+          <span class="">Zakiel</span>
+          <span>©</span>
+        </div>
       </div>
 
       <div class="flex flex-col items-center relative">
@@ -110,7 +118,9 @@ import "@fontsource/share-tech-mono";
     </nav>
   </header>
   <main class="flex flex-col pl-8">
-    <section class="w-full h-screen flex flex-col py-26 justify-between items-center">
+    <section
+      class="w-full h-screen flex flex-col py-26 justify-between items-center"
+    >
       <div class="w-[780px] flex flex-col gap-2 mt-36">
         <h1
           class="text-2xl uppercase font-bold leading-1 mb-4 tracking-[.3em] font-vcr text-[color-mix(in_lab,oklch(100%_0_0)_60%,transparent)]"
@@ -118,19 +128,40 @@ import "@fontsource/share-tech-mono";
           Juan Mercedes
         </h1>
         <div class="">
-          <div class="flex items-center gap-4 w-full font-semibold font-vcr">
-            <span class="text-8xl">Developer</span>
-            <div
+          <div
+            class="flex items-center gap-4 w-full font-semibold font-vcr relative"
+          >
+            <span class="text-8xl z-10">Developer</span>
+            <!-- <div
               class="w-full h-[3px] bg-[color-mix(in_lab,oklch(100%_0_0)_80%,transparent)] opacity-30 mt-4"
             >
+            </div> -->
+
+            <div
+              class="w-20 h-20 rotate-270 absolute top-40 left-0 bottom-0 right-0 m-auto -z-10 opacity-80"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="400"
+                height="400"
+                viewBox="0 0 288 551"
+                version="1.1"
+                class="-z-10"
+              >
+                <path
+                  d="M 56.737 54.762 L 42 69.524 42 92.775 L 42 116.026 77.250 115.763 L 112.500 115.500 112.500 100.500 L 112.500 85.500 92.750 85.229 L 73 84.958 73 62.479 C 73 50.115, 72.657 40, 72.237 40 C 71.818 40, 64.843 46.643, 56.737 54.762 M 206 62.479 L 206 84.958 186.250 85.229 L 166.500 85.500 166.500 100.500 L 166.500 115.500 201.750 115.763 L 237 116.026 237 92.750 L 237 69.475 222.238 54.737 C 214.119 46.632, 207.144 40, 206.738 40 C 206.332 40, 206 50.115, 206 62.479 M 124 116.975 L 124 169.949 108.250 170.225 L 92.500 170.500 92.500 185 L 92.500 199.500 108.250 199.775 L 124 200.051 124 242.795 L 124 285.540 114.731 294.770 C 109.633 299.846, 105.133 304, 104.731 304 C 104.329 304, 104 294.677, 104 283.281 L 104 262.563 98.777 257.274 L 93.554 251.985 103.027 242.473 L 112.500 232.960 112.500 222.730 L 112.500 212.500 101.500 212.224 L 90.500 211.948 79.517 222.974 L 68.534 234 50.526 234 L 32.518 234 52.759 254.259 L 73 274.518 73 296.259 L 73 318 52.763 318 L 32.525 318 47.500 333 L 62.475 348 67.737 348 L 73 348 73 375 L 73 402 52.763 402 L 32.525 402 47.500 417 L 62.475 432 67.737 432 L 73 432 73 437 C 73 439.750, 73.001 442.337, 73.003 442.750 C 73.004 443.163, 63.892 443.725, 52.753 444 L 32.500 444.500 77.990 489.670 C 107.025 518.501, 123.748 534.417, 124.218 533.670 C 124.624 533.027, 124.853 523.696, 124.728 512.936 L 124.500 493.373 114.250 483.103 L 104 472.833 104 452.658 L 104 432.483 125.288 411.212 L 146.576 389.941 160.538 390.220 L 174.500 390.500 174.800 396.250 L 175.100 402 167.787 402 L 160.475 402 145.520 416.980 L 130.565 431.960 152.533 432.230 L 174.500 432.500 174.770 452.574 L 175.040 472.648 164.520 483.027 L 154 493.407 154 514.949 L 154 536.492 200.005 490.496 L 246.011 444.500 225.456 444.230 L 204.901 443.959 205.201 438.230 L 205.500 432.500 211 432.205 L 216.500 431.911 231.265 417.205 L 246.030 402.500 225.765 402 L 205.500 401.500 205.500 396 L 205.500 390.500 211 390.205 L 216.500 389.911 231.265 375.205 L 246.030 360.500 225.765 360 L 205.500 359.500 205.500 354 L 205.500 348.500 211.057 348.206 L 216.613 347.912 231.544 332.956 L 246.475 318 225.737 318 L 205 318 205 312 L 205 306 210.763 306 L 216.525 306 231.500 291 L 246.475 276 200.737 276 L 155 276 155 238 L 155 200 170.500 200 L 186 200 186 185 L 186 170 170.500 170 L 155 170 155 117 L 155 64 139.500 64 L 124 64 124 116.975 M 50 145.486 L 50 163 32.500 163 C 22.875 163, 15 163.342, 15 163.760 C 15 164.179, 22.992 172.504, 32.760 182.260 L 50.520 200 65.760 200 L 81 200 81 179.025 L 81 158.051 96.750 157.775 L 112.500 157.500 112.500 143 L 112.500 128.500 81.250 128.236 L 50 127.972 50 145.486 M 166.318 142.750 L 166.500 157.500 182.250 157.775 L 198 158.051 198 179.025 L 198 200 213.240 200 L 228.480 200 246.240 182.260 C 256.008 172.504, 264 164.200, 264 163.807 C 264 163.415, 256.012 163.097, 246.250 163.101 L 228.500 163.108 228.227 145.554 L 227.954 128 197.045 128 L 166.136 128 166.318 142.750 M 166.667 212.667 C 165.661 213.672, 165.867 228.049, 166.940 231.790 C 167.591 234.060, 172.419 239.512, 182.654 249.534 L 197.429 264 206.977 264 L 216.525 264 231.500 249 L 246.475 234 228.367 234 L 210.259 234 199.090 223 L 187.920 212 177.627 212 C 171.965 212, 167.033 212.300, 166.667 212.667 M 125.241 327.259 L 104 348.517 104 368.996 L 104 389.475 118.762 374.737 L 133.524 360 154.262 360 L 175 360 175 354 L 175 348 152.763 348 L 130.525 348 145.500 333 L 160.475 318 167.737 318 L 175 318 175 312 L 175 306 160.741 306 L 146.483 306 125.241 327.259"
+                  stroke="none"
+                  fill="#ffffff"
+                  fill-rule="evenodd"></path>
+              </svg>
             </div>
           </div>
           <div class="flex gap-2 items-center font-semibold font-vcr">
             <span
-              class="text-8xl text-[color-mix(in_lab,oklch(100%_0_0)_60%,transparent)]"
+              class="text-7xl text-[color-mix(in_lab,oklch(100%_0_0)_60%,transparent)]"
               >+</span
             >
-            <span class="text-8xl">GameDev</span>
+            <span class="text-7xl">GameDev</span>
           </div>
         </div>
       </div>
