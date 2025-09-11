@@ -1,31 +1,33 @@
 ---
 import "../styles/global.css";
-
 ---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body class="bg-[oklch(17.76%_0_0)]  text-[color-mix(in_lab,oklch(100%_0_0)_80%,transparent)]- text-[oklch(100%_0_0)] ">
-		<!-- <div class="h-screen /*max-w-[calc(100vw-24px)] px-12 py-8 /*py-14 flex"> -->
-		 <div class="h-screen flex flex-col px-10  relative ">
-			<slot />
-		 </div>
-			
-		<!-- </div> -->
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Zakiel</title>
+  </head>
+  <body
+    class="bg-[oklch(17.76%_0_0)] text-[color-mix(in_lab,oklch(100%_0_0)_80%,transparent)]- text-[oklch(100%_0_0)]"
+  >
+    <!-- <div class="h-screen /*max-w-[calc(100vw-24px)] px-12 py-8 /*py-14 flex"> -->
+    <div class=" relative h-svh w-svw ">
+      <slot />
+    </div>
+
+    <!-- </div> -->
+  </body><!-- <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> <path d="M10 5H8v2H4V5H2v2H0v12h12V7h-2V5zM2 9h8v2H2V9zm0 8v-4h8v4H2zm18 2h-2v-8h-2V9h2V7h2v2h2v2h-2v8zm2-8v2h2v-2h-2zm-6 0v2h-2v-2h2z" fill="currentColor"/> -->
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>

@@ -7,6 +7,23 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'OffBit';
+  src: url('/fonts/OffBit-Bold.ttf') format('truetype');
+  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.woff2') format('woff2'),
+       url('/fonts/DepartureMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 @theme {  --background-color: oklch(17.76% 0 0); }
 
 @theme inline {
@@ -14,7 +31,10 @@
     /* FONT TESTING */
     
     --font-sharetech: 'Share Tech Mono', monospace;
-    --font-vcr: "vcr-ost-mono", monospace
+    --font-vcr: "vcr-ost-mono", monospace;
+    --font-vst: 'VT323', monospace;
+    --font-offbit: 'OffBit', monospace;
+    --font-departure: 'Departure Mono', monospace
   }
   
   
