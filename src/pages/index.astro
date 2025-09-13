@@ -6,53 +6,44 @@ import "@fontsource/vt323";
 import Loader2Icon from "@lucide/svelte/icons/loader-2";
 import { Button } from "$lib/components/ui/button/index.js";
 import LanguageSelector from "../components/LanguageSelector.svelte";
-import Moon from "../components/Moon.svelte";
+import ThemeToggle from "../components/ThemeToggle.svelte";
 ---
 
+<script is:inline>
+  const isBrowser = typeof localStorage !== "undefined";
+  const getThemePreference = () => {
+    if (isBrowser && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (isBrowser) {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
 <Layout>
+  
   <header class="w-full flex justify-between items-center py-12">
     <a href="#" class="text-2xl font-vst">zakiel</a>
 
     <div>Z</div>
 
     <div class="flex items-center">
-      <LanguageSelector client:only="svelte" />
-      <!-- <div class="flex gap-1">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-languages-icon lucide-languages"
-          ><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path
-            d="M2 5h12"></path><path d="M7 2h1"></path><path
-            d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg
-        >
-        <span class="text-sm font-semibold">ESP</span>
-      </div> -->
-
-      <Button variant="ghost" size="icon">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-moon-icon lucide-moon"
-          ><path
-            d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"
-          ></path></svg
-        >
-      </Button>
+      <LanguageSelector client:load />
+      <ThemeToggle client:load/>
     </div>
   </header>
   <main class="w-full flex-1">

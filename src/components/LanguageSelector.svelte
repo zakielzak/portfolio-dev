@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getLocale, setLocale} from "../paraglide/runtime.js";
-  import * as m from "../paraglide/messages.js";
   import * as Select from "$lib/components/ui/select/index.js";
   import Languages from "@lucide/svelte/icons/Languages";
 
@@ -33,7 +32,7 @@
       }
     }}
   >
-    <Select.Trigger class="flex items-center cursor-pointer hover:bg-accent duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5">
+    <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5">
       
         <Languages class="size-6" />
        

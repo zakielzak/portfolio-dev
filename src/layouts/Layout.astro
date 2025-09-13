@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ModeWatcher } from "mode-watcher";
 ---
 
 <!doctype html>
@@ -12,11 +13,11 @@ import "../styles/global.css";
     <title>Zakiel</title>
   </head>
   <body
-    class="bg-[oklch(17.76%_0_0)]/ text-[color-mix(in_lab,oklch(100%_0_0)_80%,transparent)]- text-[oklch(100%_0_0)]/ text-black/80 flex flex-col items-center"
+    class="flex flex-col items-center text-black/80 dark:text-white/80 bg-white/ dark:bg-black/"
   >
-
-    <div class=" relative min-h-svh w-full max-w-4xl">
+    <div class="relative min-h-svh w-full max-w-4xl">
       <slot />
+      <ModeWatcher client:load />
     </div>
 
     <!-- </div> -->
