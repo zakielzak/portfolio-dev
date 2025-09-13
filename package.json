@@ -4,11 +4,13 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "machine-translate": "inlang machine translate --project project.inlang"
   },
   "dependencies": {
+    "@astrojs/node": "^9.4.3",
     "@astrojs/svelte": "^7.1.1",
     "@fontsource/share-tech-mono": "^5.2.5",
     "@fontsource/vt323": "^5.2.6",
@@ -21,6 +23,8 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "@inlang/cli": "^3.0.0",
+    "@inlang/paraglide-js": "2.3.0",
     "@internationalized/date": "^3.9.0",
     "@lucide/svelte": "^0.515.0",
     "bits-ui": "^2.9.7",

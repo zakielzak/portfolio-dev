@@ -1,54 +1,56 @@
 <script lang="ts">
-  import { onMount } from "svelte"
+  import { getLocale, setLocale} from "../paraglide/runtime.js";
+  import * as m from "../paraglide/messages.js";
   import * as Select from "$lib/components/ui/select/index.js";
- 
-  const languages = [
-    { value: "en", label: "English"},
-    { value: "es", label: "Español"},
-  ]
- 
-  let value = $state("en");
- 
-  const triggerContent = $derived(
-    languages.find((lang) => lang.value === value)?.label ?? ""
-  );
+  import Languages from "@lucide/svelte/icons/Languages";
 
-  $effect(() => {
-    if (value) {
-        localStorage.setItem("language", value);
-    }
-  })
 
-  onMount(() => {
-    // Try load language from localStorage
-    const savedLang = localStorage.getItem("language");
-    if (savedLang) {
-        value = savedLang;
-        return
-    }
+  type Locale = "en" | "es";
 
-    // If not, then use browser language
-    const browserLang = navigator.language.split("-")[0];
-    if (languages.some((lang) => lang.value === browserLang)) {
-        value = browserLang
+  const languages: { value: Locale; label: string }[] = [
+    { value: "en", label: "ENG" },
+    { value: "es", label: "ESP" },
+  ];
+
+  let currentLocale = $state<Locale>(getLocale() as Locale);
+
+  function handleLanguageChange(newLocale: Locale) {
+    if (newLocale) {
+      setLocale(newLocale);
     }
-  })
+  }
+
+
 </script>
- 
-<Select.Root type="single" name="language=selector" bind:value>
-  <Select.Trigger class="w-[180px]">
-    {triggerContent}
-  </Select.Trigger>
-  <Select.Content>
-    <Select.Group>
-      {#each languages as lang (lang.value)}
-        <Select.Item
-          value={lang.value}
-          label={lang.label}
-        >
-          {lang.label}
-        </Select.Item>
-      {/each}
-    </Select.Group>
-  </Select.Content>
-</Select.Root>
+
+
+  <Select.Root
+    type="single"
+    bind:value={currentLocale }
+    onValueChange={(value: string | string[] | null) => {
+      if (typeof value === "string") {
+        handleLanguageChange(value as Locale);
+      }
+    }}
+  >
+    <Select.Trigger class="flex items-center cursor-pointer hover:bg-accent duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5">
+      
+        <Languages class="size-6" />
+       
+        <span class="truncate font-semibold">
+          {languages.find((lang) => lang.value === currentLocale)?.label}
+        </span>
+      
+    </Select.Trigger>
+    <Select.Content class="font-semibold">
+      <Select.Group>
+        {#each languages as lang (lang.value)}
+          <Select.Item value={lang.value} label={lang.label} class="">
+            {lang.label}
+          </Select.Item>
+        {/each}
+      </Select.Group>
+    </Select.Content>
+  </Select.Root>
+
+  
