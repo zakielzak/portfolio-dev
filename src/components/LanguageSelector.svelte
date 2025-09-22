@@ -41,7 +41,7 @@
         </span>
       
     </Select.Trigger>
-    <Select.Content class="font-semibold">
+    <Select.Content class="font-semibold border-none">
       <Select.Group>
         {#each languages as lang (lang.value)}
           <Select.Item value={lang.value} label={lang.label} class="">

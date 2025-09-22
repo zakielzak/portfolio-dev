@@ -1,0 +1,14 @@
+---
+import LanguageSelector from "../components/LanguageSelector.svelte";
+import ThemeToggle from "../components/ThemeToggle.svelte";
+---
+
+<header class="w-full flex justify-between items-center py-12">
+  <a href="#" class="text-4xl font-vcr">Z</a>
+  <div class="border size-12 rounded-2xl shadow-xs"></div>
+
+  <div class="flex items-center">
+    <LanguageSelector client:load />
+    <ThemeToggle client:load />
+  </div>
+</header>
