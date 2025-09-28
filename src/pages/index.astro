@@ -2,94 +2,311 @@
 import Layout from "../layouts/Layout.astro";
 import "@fontsource/share-tech-mono";
 import "@fontsource/vt323";
+import "@fontsource/metropolis";
+import "@fontsource-variable/figtree";
 
-import { projects, techStack } from "../const";
 import { m } from "../paraglide/messages";
-
-import Loader2Icon from "@lucide/svelte/icons/loader-2";
-import { Button } from "$lib/components/ui/button/index.js";
 import ProjectCard from "src/components/ProjectCard.astro";
+import { spring } from "motion";
+
+import TechBadge from "../components/techBadge.astro";
+
+import type { TechID } from "../const";
+
+const selectedTechs: TechID[] = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "C#",
+  "Rust",
+  "Astro",
+  "React",
+  "Svelte",
+  "TailwindCSS",
+  "Three.js",
+  "Git",
+  "AWS",
+  "MySQL",
+];
 ---
 
 <Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
-  <main class="w-full flex-1">
+  <style
+    define:vars={{
+      mainTitle: spring(5, 0.4),
+      introText: spring(6, 0.1),
+      springFast: spring(9, 0.2),
+      springDeliberate: spring(9, 0.05),
+    }}
+  >
+    .main-title {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideInBounce 2s var(--mainTitle) forwards;
+      animation-delay: 1s;
+      will-change: transform, opacity;
+    }
+
+    /* Párrafo intro - oculto inicialmente */
+    .intro-text {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideInSmooth 1s var(--introText) forwards;
+      animation-delay: 2.5s;
+      will-change: transform, opacity;
+    }
+
+    /* Título proyectos - oculto inicialmente */
+    .projects-title {
+      opacity: 1;
+      /*  transform: translateY(30px);
+      animation: slideInBounce 0.8s var(--springBounce) forwards;
+      animation-delay: 3s; */
+      will-change: transform, opacity;
+    }
+
+    /* Tarjetas de proyecto - ocultas inicialmente */
+    .project-card {
+      opacity: 1;
+      /*   transform: translateY(30px);
+      animation: slideInFast 0.6s var(--springFast) forwards; */
+      will-change: transform, opacity;
+    }
+    .project-card:nth-child(1) {
+      animation-delay: 4s;
+    }
+    .project-card:nth-child(2) {
+      animation-delay: 4.4s;
+    }
+    .project-card:nth-child(3) {
+      animation-delay: 4.8s;
+    }
+
+    /* Sección about - oculta inicialmente */
+    .about-section {
+      opacity: 1;
+      /* transform: translateY(30px); */
+      /*  animation: slideInDeliberate 1.5s var(--springDeliberate) forwards;
+      animation-delay: 5.5s; */
+      will-change: transform, opacity;
+    }
+
+    /* Keyframes */
+    @keyframes slideInBounce {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInSmooth {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFast {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInDeliberate {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <main class="flex-1 px-22 pt-32">
     <!-- Juan Mercedes, Software Developer , Frontend , Backend -->
     <section class="">
-      <h1 class="text-xl tracking-wider">
-        {m.greetings()}
-        <!-- — Web & Software Developer. -->
-      </h1>
+      <!-- <h1
+        id="greeting-text"
+        class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title"
+      >
+        {m.greetings()} -->
+      <!-- — Web & Software Developer. -->
+      <!-- </h1> -->
+      <div
+        id="greeting-text"
+        class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
+      >
+        <h1 class="font-sharetech">Hi there,</h1>
+        <h2 class="font-vcr">here Juan</h2>
+      </div>
 
-      <p class="text-lg mt-2">
+      <p id="intro-text" class="text-xl mt-2 intro-text font-offbit">
         {m.intro()}
       </p>
 
       <div class="mt-12 flex flex-col gap-8">
-        <section>
+        <section class="mt-[620px]">
           <h2
-            class="before:content-[''] before:rounded-[4px] before:inline-block before:size-4 dark:before:bg-white/80 before:bg-black before:mr-2 shrink-0 text-xl font-offbit"
+            class="before:content-[''] before:rounded-[4px] before:inline-block before:size-4 dark:before:bg-white/80 before:bg-black before:mr-2 shrink-0 text-xl font-offbit projects-title"
           >
             {m.title_projects()}
           </h2>
 
           <div class="flex flex-col gap-14 mt-4">
-            <!--  {
-              projects.map((project) => (
-                <ProjectCard
-                  title={project.title}
-                  description={project.description}
-                  features={project.features}
-                  techStack={project.techStack}
-                  caseStudyHref={project.caseStudyHref}
-                  githubHref={project.githubHref}
-                />
-              ))
-            } -->
-            <ProjectCard
-              title={m.project_music_title()}
-              description={m.project_music_desc()}
-              features={[
-                m.project_music_f1(),
-                m.project_music_f2(),
-                m.project_music_f3(),
-                m.project_music_f4(),
-              ]}
-              techStack={["TypeScript", "React", "Rust"]}
-              caseStudyHref="/projects/music-app"
-              githubHref="https://github.com/your-repo-music-app"
-            />
-            <ProjectCard
-              title={m.project_image_title()}
-              description={m.project_image_desc()}
-              features={[
-                m.project_image_f1(),
-                m.project_image_f2(),
-                m.project_image_f3(),
-                m.project_image_f4(),
-              ]}
-              techStack={["TypeScript", "React", "Rust"]}
-              caseStudyHref="/projects/image-manager"
-              githubHref="https://github.com/your-repo-music-app"
-            />
-            <ProjectCard
-              title={m.project_productivity_title()}
-              description={m.project_productivity_desc()}
-              features={[
-                m.project_productivity_f1(),
-                m.project_productivity_f2(),
-                m.project_productivity_f3(),
-                m.project_productivity_f4(),
-              ]}
-              techStack={["TypeScript", "React", "Rust"]}
-              caseStudyHref="/projects/productivity-app"
-              githubHref="https://github.com/your-repo-music-app"
-            />
+            <div class="project-card font-fig">
+              <ProjectCard
+                title={m.project_music_title()}
+                description={m.project_music_desc()}
+                features={[
+                  m.project_music_f1(),
+                  m.project_music_f2(),
+                  m.project_music_f3(),
+                  m.project_music_f4(),
+                ]}
+                techStack={["TypeScript", "React", "Rust"]}
+                caseStudyHref="/projects/music-app"
+                githubHref="https://github.com/your-repo-music-app"
+              />
+            </div>
+            <div class="project-card font-fig">
+              <ProjectCard
+                title={m.project_image_title()}
+                description={m.project_image_desc()}
+                features={[
+                  m.project_image_f1(),
+                  m.project_image_f2(),
+                  m.project_image_f3(),
+                  m.project_image_f4(),
+                ]}
+                techStack={["TypeScript", "React", "Rust"]}
+                caseStudyHref="/projects/image-manager"
+                githubHref="https://github.com/your-repo-music-app"
+              />
+            </div>
+            <div class="project-card font-fig">
+              <ProjectCard
+                title={m.project_productivity_title()}
+                description={m.project_productivity_desc()}
+                features={[
+                  m.project_productivity_f1(),
+                  m.project_productivity_f2(),
+                  m.project_productivity_f3(),
+                  m.project_productivity_f4(),
+                ]}
+                techStack={["TypeScript", "React", "Rust"]}
+                caseStudyHref="/projects/productivity-app"
+                githubHref="https://github.com/your-repo-music-app"
+              />
+            </div>
           </div>
         </section>
 
-        <section class="mb-12">
+        <section class="mb-12 about-section">
           <span class="font-offbit">{m.about_title()}</span>
-          <div class="flex flex-col gap-3">
+          <div class="mt-6 grid grid-cols-4 grid-rows-14 gap-4 h-[600px]">
+            <div
+              class="col-span-2 row-span-6 col-start-1 border font-fig px-4 py-3.5 flex flex-col"
+            >
+              <div class="flex items-center gap-2">
+                <span class="text-lg font-semibold"
+                  >Made it this far? Awesome!
+                </span>
+                <!-- <div class="w-12 h-1 bg-black/60 rounded-xs"></div> -->
+              </div>
+
+              <div class="flex flex-col gap-2">
+                <p
+                  class="text-xl font-medium tracking-tight text-black/65 dark:text-white/65"
+                >
+                  <!-- Let me introduce myself: --> I’m Juan Mercedes, a Systems
+                  Engineering student specializing in full-stack web development
+                  and UI/UX design. I have around 1.5 years of hands-on experience
+                  through personal projects.
+                </p>
+              </div>
+            </div>
+            <div
+              class="row-span-4 col-start-1 row-start-7 col-span-2 border px-4 flex items-center"
+            >
+              <p
+                class="text-base font-medium tracking-tight text-black/65 dark:text-white/65 font-fig"
+              >
+                I combine a calm and empathetic attitude with a logical and
+                pragmatic mindset. Many describe me as a balance between empathy
+                and logic, this translates into concrete skills: clear
+                communication, strong teamwork, and high adaptability to design
+                effective solutions for real-world complex problems.
+              </p>
+            </div>
+
+            <div
+              class="row-span-4 col-start-1 row-start-11 border flex items-center px-4"
+            >
+              Profile Picture My favorite Animal is the fox
+            </div>
+            <div
+              class="row-span-4 col-start-2 row-start-11 border px-4 py-3.5 text-xs"
+            >
+              Wanna know more about me? <!-- Check this When I’m not immersed in
+              projects, you’ll find me playing video games, listening to music,
+              or exploring the latest tech trends. I enjoy blending creativity
+              with logical thinking. -->
+            </div>
+            <div
+              class="col-span-2 row-span-5 col-start-3 border px-4 py-3.5 font-fig flex flex-col gap-2 w-full font-semibold text-lg"
+            >
+              Techstack
+
+              <div class="flex gap-3 flex-wrap">
+                <TechBadge techs={selectedTechs} />
+              </div>
+            </div>
+            <!-- <div class="col-start-3 row-start-6 row-span-4 border px-4 py-3.5">
+              1.5 Years experience
+            </div>
+            <div class="col-start-4 row-start-6 row-span-4 border px-4 py-3.5">
+              Github Star
+            </div> -->
+            <div
+              class="col-start-3 col-span-2 row-start-8 row-span-4 border px-4 py-3.5"
+            >
+            </div>
+            <div
+              class="col-start-3 col-span-1 row-start-12 row-span-3 border px-4 py-3.5"
+            >
+            </div>
+            <div
+              class="col-start-4 col-span-1 row-start-12 row-span-3 border px-4 py-3.5"
+            >
+            </div>
+
+            <div
+              class="col-span-2 col-start-3 row-start-6 row-span-2 border font-fig flex flex-col items-center justify-center relative group overflow-hidden transition-all hover:bg-black/80 dark:hover:bg-white/80"
+            >
+              <span
+                class="text-2xl font-semibold transition-opacity duration-500 ease-in-out group-hover:opacity-0 group-hover:invisible"
+                >"Make it exist first, then improve it."</span
+              >
+
+              <p
+                class="text-xs font-medium flex px-4 items-center justify-center absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 text-white dark:text-black"
+              >
+                I focus on starting with a simple but solid foundation, and then
+                adding value by refining it with details that truly enhance it.
+                This iterative process allows me to work efficiently and deliver
+                high-quality results.
+              </p>
+            </div>
+            <!-- <div
+              class="col-span-2 col-start-3 row-start-12 row-span-3 border font-fig flex flex-col items-center justify-center relative"
+            >
+              Github History
+            </div> -->
+          </div>
+
+          <!--  <div class="flex flex-col gap-3">
             <span class="font-semibold">{m.about_subtitle()}</span>
             <p>
               {m.about_p1()}
@@ -107,22 +324,409 @@ import ProjectCard from "src/components/ProjectCard.astro";
               {m.about_p4()}
             </p>
 
-            <span>My Techstack</span>
+            <span>Techstack</span>
             <p>
               {m.tech()}
             </p>
             <div class="flex gap-5 flex-wrap">
-              {
-                techStack.map((tech) => (
-                  <div>
-                    {tech}
-                  </div>
-                ))
-              }
-            </div>
-          </div>
+              {techStack.map((tech) => <div>{tech}</div>)}
+            </div> -->
         </section>
       </div>
     </section>
   </main>
 </Layout>
+<script>
+  // Ejecutar después de que el DOM esté listo
+  import { textScramble } from "../lib/textScramble.ts";
+
+  const greetingElement = document.getElementById("greeting-text");
+  const introElement = document.getElementById("intro-text");
+
+  if (introElement) {
+    // Opcional: definir un conjunto de caracteres japoneses personalizado
+    const japaneseChars =
+      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
+    /* const japaneseChars =
+        "アァカサタナハマヤ"; */
+
+    textScramble(introElement, {
+      duration: 1.2, // Una duración más larga para un efecto más dramático
+      speed: 0.05,
+      characterSet: japaneseChars,
+      delay: 2.5,
+    });
+  }
+
+  if (greetingElement) {
+    // Opcional: definir un conjunto de caracteres japoneses personalizado
+    const japaneseChars =
+      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
+    /* const japaneseChars =
+        "アァカサタナハマヤ"; */
+
+    textScramble(greetingElement, {
+      duration: 1.2, // Una duración más larga para un efecto más dramático
+      speed: 0.05,
+      characterSet: japaneseChars,
+      delay: 1,
+    });
+  }
+</script>
+
+<!-- <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"
+                    ></path></svg
+                  >
+                  HTML
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"
+                    ></path></svg
+                  >
+                  CSS
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"
+                    ></path></svg
+                  >
+                  JavaScript
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"
+                    ></path></svg
+                  >
+                  TypeScript
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-nodejs w-4 h-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M9 9v8.044a2 2 0 0 1 -2.996 1.734l-1.568 -.9a3 3 0 0 1 -1.436 -2.561v-6.635a3 3 0 0 1 1.436 -2.56l6 -3.667a3 3 0 0 1 3.128 0l6 3.667a3 3 0 0 1 1.436 2.561v6.634a3 3 0 0 1 -1.436 2.56l-6 3.667a3 3 0 0 1 -3.128 0"
+                    ></path><path
+                      d="M17 9h-3.5a1.5 1.5 0 0 0 0 3h2a1.5 1.5 0 0 1 0 3h-3.5"
+                    ></path></svg
+                  >
+                  Node.js
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-python size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path d="M12 9h-7a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h3"
+                    ></path><path
+                      d="M12 15h7a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-3"
+                    ></path><path
+                      d="M8 9v-4a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v5a2 2 0 0 1 -2 2h-4a2 2 0 0 0 -2 2v5a2 2 0 0 0 2 2h4a2 2 0 0 0 2 -2v-4"
+                    ></path><path d="M11 6l0 .01"></path><path d="M13 18l0 .01"
+                    ></path></svg
+                  >
+                  Python
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-c-sharp size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M10 9a3 3 0 0 0 -3 -3h-.5a3.5 3.5 0 0 0 -3.5 3.5v5a3.5 3.5 0 0 0 3.5 3.5h.5a3 3 0 0 0 3 -3"
+                    ></path><path d="M16 7l-1 10"></path><path d="M20 7l-1 10"
+                    ></path><path d="M14 10h7.5"></path><path d="M21 14h-7.5"
+                    ></path></svg
+                  >
+                  C#
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z"
+                    ></path></svg
+                  >
+                  .NET
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-rust size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M10.139 3.463c.473 -1.95 3.249 -1.95 3.722 0a1.916 1.916 0 0 0 2.859 1.185c1.714 -1.045 3.678 .918 2.633 2.633a1.916 1.916 0 0 0 1.184 2.858c1.95 .473 1.95 3.249 0 3.722a1.916 1.916 0 0 0 -1.185 2.859c1.045 1.714 -.918 3.678 -2.633 2.633a1.916 1.916 0 0 0 -2.858 1.184c-.473 1.95 -3.249 1.95 -3.722 0a1.916 1.916 0 0 0 -2.859 -1.185c-1.714 1.045 -3.678 -.918 -2.633 -2.633a1.916 1.916 0 0 0 -1.184 -2.858c-1.95 -.473 -1.95 -3.249 0 -3.722a1.916 1.916 0 0 0 1.185 -2.859c-1.045 -1.714 .918 -3.678 2.633 -2.633a1.914 1.914 0 0 0 2.858 -1.184z"
+                    ></path><path d="M8 12h6a2 2 0 1 0 0 -4h-6v8v-4z"
+                    ></path><path
+                      d="M19 16h-2a2 2 0 0 1 -2 -2a2 2 0 0 0 -2 -2h-1"
+                    ></path><path d="M9 8h-4"></path><path d="M5 16h4"
+                    ></path></svg
+                  >
+                  Rust
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-astro size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M14.972 3.483c.163 .196 .247 .46 .413 .987l3.64 11.53a15.5 15.5 0 0 0 -4.352 -1.42l-2.37 -7.723a.31 .31 0 0 0 -.296 -.213a.31 .31 0 0 0 -.295 .214l-2.342 7.718a15.5 15.5 0 0 0 -4.37 1.422l3.657 -11.53c.168 -.527 .251 -.79 .415 -.986c.144 -.172 .331 -.306 .544 -.388c.242 -.094 .527 -.094 1.099 -.094h2.612c.572 0 .858 0 1.1 .094c.213 .082 .4 .217 .545 .39"
+                    ></path><path
+                      d="M9 18c0 1.5 2 3 3 4c1 -1 3 -3 3 -4q -3 1.5 -6 0"
+                    ></path></svg
+                  >
+                  Astro
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"
+                    ></path></svg
+                  >
+                  React
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-svelte size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M15 8l-5 3l.821 -.495c1.86 -1.15 4.412 -.49 5.574 1.352a3.91 3.91 0 0 1 -1.264 5.42l-5.053 3.126c-1.86 1.151 -4.312 .591 -5.474 -1.251a3.91 3.91 0 0 1 1.263 -5.42l.26 -.16"
+                    ></path><path
+                      d="M8 17l5 -3l-.822 .496c-1.86 1.151 -4.411 .491 -5.574 -1.351a3.91 3.91 0 0 1 1.264 -5.42l5.054 -3.127c1.86 -1.15 4.311 -.59 5.474 1.252a3.91 3.91 0 0 1 -1.264 5.42l-.26 .16"
+                    ></path></svg
+                  >
+                  Svelte
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M12.001,4.8c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 C13.666,10.618,15.027,12,18.001,12c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C16.337,6.182,14.976,4.8,12.001,4.8z M6.001,12c-3.2,0-5.2,1.6-6,4.8c1.2-1.6,2.6-2.2,4.2-1.8c0.913,0.228,1.565,0.89,2.288,1.624 c1.177,1.194,2.538,2.576,5.512,2.576c3.2,0,5.2-1.6,6-4.8c-1.2,1.6-2.6,2.2-4.2,1.8c-0.913-0.228-1.565-0.89-2.288-1.624 C10.337,13.382,8.976,12,6.001,12z"
+                    ></path></svg
+                  >
+                  TailwindCSS
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-threejs size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path d="M8 22l-5 -19l19 5.5z"></path><path
+                      d="M12.573 17.58l-6.152 -1.576l8.796 -9.466l1.914 6.64"
+                    ></path><path d="M12.573 17.58l-1.573 -6.58l6.13 2.179"
+                    ></path><path d="M9.527 4.893l1.473 6.107l-6.31 -1.564z"
+                    ></path></svg
+                  >
+                  Three.js
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    stroke-width="0"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    class="w-3.5 h-3.5 flex-shrink-0"
+                    aria-hidden="true"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><path
+                      d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"
+                    ></path></svg
+                  >
+                  Git
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-aws size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M17 18.5a15.198 15.198 0 0 1 -7.37 1.44a14.62 14.62 0 0 1 -6.63 -2.94"
+                    ></path><path
+                      d="M19.5 21c.907 -1.411 1.451 -3.323 1.5 -5c-1.197 -.773 -2.577 -.935 -4 -1"
+                    ></path><path d="M3 11v-4.5a1.5 1.5 0 0 1 3 0v4.5"
+                    ></path><path d="M3 9h3"></path><path
+                      d="M9 5l1.2 6l1.8 -4l1.8 4l1.2 -6"></path><path
+                      d="M18 10.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75"
+                    ></path></svg
+                  >
+                  AWS
+                </div>
+                <div
+                  class="text-xs font-semibold font-fig border px-1.5 py-1.5 rounded-br-lg flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-brand-mysql size-4"
+                    ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                    ></path><path
+                      d="M13 21c-1.427 -1.026 -3.59 -3.854 -4 -6c-.486 .77 -1.501 2 -2 2c-1.499 -.888 -.574 -3.973 0 -6c-1.596 -1.433 -2.468 -2.458 -2.5 -4c-3.35 -3.44 -.444 -5.27 2.5 -3h1c8.482 .5 6.421 8.07 9 11.5c2.295 .522 3.665 2.254 5 3.5c-2.086 -.2 -2.784 -.344 -3.5 0c.478 1.64 2.123 2.2 3.5 3"
+                    ></path><path d="M9 7h.01"></path></svg
+                  >
+                  MySQL
+                </div>
+                -->

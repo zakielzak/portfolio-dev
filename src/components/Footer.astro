@@ -1,1 +1,22 @@
-<footer class="w-full">Made with :hearth by Juan @2025</footer>
+---
+import { spring } from "motion";
+---
+
+<style define:vars={{ spring: spring(9, 0.2) }}>
+  /* Footer oculto inicialmente */
+  footer {
+    opacity: 0;
+    /* transform: translateY(20px);
+    animation: slideUp 0.8s var(--spring) forwards;
+    animation-delay: 6s;  */
+    will-change: transform, opacity;
+  }
+
+  @keyframes slideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+<footer class="w-full opacity-0">Made with ❤️ by Juan @2025</footer>

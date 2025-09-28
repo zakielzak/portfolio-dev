@@ -32,16 +32,16 @@
       }
     }}
   >
-    <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5">
+    <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5 font-fig">
       
         <Languages class="size-6" />
        
-        <span class="truncate font-semibold">
+        <span class="truncate font-semibold ">
           {languages.find((lang) => lang.value === currentLocale)?.label}
         </span>
       
     </Select.Trigger>
-    <Select.Content class="font-semibold border-none">
+    <Select.Content class="font-semibold border-none font-fig">
       <Select.Group>
         {#each languages as lang (lang.value)}
           <Select.Item value={lang.value} label={lang.label} class="">

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @import "tw-animate-css";
+@plugin "tailwindcss-motion";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -153,7 +154,9 @@
     --font-vcr: "vcr-ost-mono", monospace;
     --font-vst: 'VT323', monospace;
     --font-offbit: 'OffBit', monospace;
-    --font-departure: 'Departure Mono', monospace
+    --font-departure: 'Departure Mono', monospace;
+    --font-metro: 'Metropolis', sans-serif;
+    --font-fig: 'Figtree Variable', sans-serif;
   }
   
   
