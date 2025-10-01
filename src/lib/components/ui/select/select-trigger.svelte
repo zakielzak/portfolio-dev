@@ -25,5 +25,5 @@
 	{...restProps}
 >
 	{@render children?.()}
-	<ChevronDownIcon class="size-3 opacity-90/" />
+	<!-- <ChevronDownIcon class="size-3 opacity-90/" /> -->
 </SelectPrimitive.Trigger>

@@ -34,7 +34,7 @@
   >
     <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5 font-fig">
       
-        <Languages class="size-6" />
+        <Languages class="size-5" />
        
         <span class="truncate font-semibold ">
           {languages.find((lang) => lang.value === currentLocale)?.label}

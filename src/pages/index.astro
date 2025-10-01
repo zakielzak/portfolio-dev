@@ -5,6 +5,8 @@ import "@fontsource/vt323";
 import "@fontsource/metropolis";
 import "@fontsource-variable/figtree";
 
+import StickyProjects from "../components/StickyProjects.svelte";
+
 import { m } from "../paraglide/messages";
 import ProjectCard from "src/components/ProjectCard.astro";
 import { spring } from "motion";
@@ -124,7 +126,7 @@ const selectedTechs: TechID[] = [
     }
   </style>
 
-  <main class="flex-1 px-22 pt-32">
+  <div class="flex-1">
     <!-- Juan Mercedes, Software Developer , Frontend , Backend -->
     <section class="">
       <!-- <h1
@@ -148,13 +150,88 @@ const selectedTechs: TechID[] = [
 
       <div class="mt-12 flex flex-col gap-8">
         <section class="mt-[620px]">
-          <h2
-            class="before:content-[''] before:rounded-[4px] before:inline-block before:size-4 dark:before:bg-white/80 before:bg-black before:mr-2 shrink-0 text-xl font-offbit projects-title"
-          >
-            {m.title_projects()}
-          </h2>
+          <div class="projects-pin-container">
+            <h2
+              id="projects-title"
+              class="before:content-['']= before:rounded-[4px]= before:inline-block= before:size-4- dark:before:bg-white/80- before:bg-black- before:mr-2- shrink-0 text-4xl font-offbit projects-title sticky top-0 md:top-13 uppercase. "
+            >
+              <!-- {m.title_projects()} -->
+            </h2>
+            <div
+              id="projects-content-wrapper"
+              class="flex flex-col gap-14 mt-4"
+            >
+              <div
+                class="project-card
+              font-fig project-item project-card-wrapper"
+              >
+             
+               <div class="h-[300px]">
+                <div class="flex flex-col gap-1"> 
+                   <span class="before:content-[''] before:rounded-[4px] before:inline-block before:size-4 dark:before:bg-white/80 before:bg-black before:mr-2 shrink-0 text-lg"> 01 </span>
+                <span class="text-2xl"> Music Player App</span>
+                </div> 
+                
 
-          <div class="flex flex-col gap-14 mt-4">
+              
+              div
+               
+               </div>
+        
+                <!-- <ProjectCard
+                  title={m.project_music_title()}
+                  description={m.project_music_desc()}
+                  features={[
+                    m.project_music_f1(),
+                    m.project_music_f2(),
+                    m.project_music_f3(),
+                    m.project_music_f4(),
+                  ]}
+                  techStack={["TypeScript", "React", "Rust"]}
+                  caseStudyHref="/projects/music-app"
+                  githubHref="https://github.com/your-repo-music-app"
+                /> -->
+              </div>
+              <!-- <div
+                class="project-card
+              font-fig project-item project-card-wrapper"
+              >
+                <ProjectCard
+                  title={m.project_music_title()}
+                  description={m.project_music_desc()}
+                  features={[
+                    m.project_music_f1(),
+                    m.project_music_f2(),
+                    m.project_music_f3(),
+                    m.project_music_f4(),
+                  ]}
+                  techStack={["TypeScript", "React", "Rust"]}
+                  caseStudyHref="/projects/music-app"
+                  githubHref="https://github.com/your-repo-music-app"
+                />
+              </div>
+              <div
+                class="project-card
+              font-fig project-item project-card-wrapper"
+              >
+                <ProjectCard
+                  title={m.project_music_title()}
+                  description={m.project_music_desc()}
+                  features={[
+                    m.project_music_f1(),
+                    m.project_music_f2(),
+                    m.project_music_f3(),
+                    m.project_music_f4(),
+                  ]}
+                  techStack={["TypeScript", "React", "Rust"]}
+                  caseStudyHref="/projects/music-app"
+                  githubHref="https://github.com/your-repo-music-app"
+                />
+              </div> -->
+            </div>
+          </div>
+
+          <!-- <div class="flex flex-col gap-14 mt-4">
             <div class="project-card font-fig">
               <ProjectCard
                 title={m.project_music_title()}
@@ -200,7 +277,7 @@ const selectedTechs: TechID[] = [
                 githubHref="https://github.com/your-repo-music-app"
               />
             </div>
-          </div>
+          </div> -->
         </section>
 
         <section class="mb-12 about-section">
@@ -334,9 +411,57 @@ const selectedTechs: TechID[] = [
         </section>
       </div>
     </section>
-  </main>
+  </div>
 </Layout>
 <script>
+  import { scroll, animate } from "motion";
+
+
+  const projects = document.querySelectorAll<HTMLElement>(".project-item");
+  const projectContainer = document.getElementById("projects-content-wrapper");
+  const projectTitle = document.getElementById("projects-title");
+
+  if (projects.length === 0 || !projectContainer || !projectTitle) {
+    console.warn(
+      "No se encontraron todos los elementos necesarios para la animación de scroll."
+    );
+  }
+
+  /**
+   * 3. Configuración y Animación de Scroll
+   * Se utiliza el patrón de 'scroll-linked animation' de Motion para enlazar
+   * la opacidad y posición de cada proyecto al progreso del scroll.
+   */
+  projects.forEach((project, index) => {
+    const scrollOptions = {
+      target: project,
+      container: document.documentElement,
+
+      // El problema estaba aquí. Aunque es un string[], lo definimos.
+      offset: ["start 80%", "end 20%"] as const, // Usamos 'as const' para tipificar como tupla estricta
+    };
+
+    // Usamos una aserción de tipo genérica al llamar a 'scroll()' para
+    // que TypeScript use la inferencia del tipo de opciones que espera la función.
+    // Esto es más simple y efectivo que importar tipos internos.
+
+    // --- ANIMACIÓN DE OPACIDAD ---
+    scroll((progress: number) => {
+      const opacity = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
+      animate(project, { opacity: opacity }, { duration: 0 });
+    }, scrollOptions as any); // <-- Aserción 'any' en la llamada para forzar compatibilidad
+
+    // --- ANIMACIÓN DE TRANSFORMACIÓN ---
+    scroll((progress: number) => {
+      const translateY = (1 - progress) * 50;
+      animate(
+        project,
+        { transform: `translateY(${translateY}px)` },
+        { duration: 0 }
+      );
+    }, scrollOptions as any); // <-- Aserción 'any' en la llamada para forzar compatibilidad
+  });
+
   // Ejecutar después de que el DOM esté listo
   import { textScramble } from "../lib/textScramble.ts";
 
