@@ -179,9 +179,10 @@
 }
 
 .clip {
-  clip-path: polygon(0 -1px,100% -1px,calc(100% - 10px) 100%,10px 100%);
- /*  clip-path: polygon(0 0, 100% 0, 88% 100%, 29% 100%); */
+  /* clip-path: polygon(0 -1px,100% -1px,calc(100% - 10px) 100%,10px 100%); */
+ clip-path: polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);
 }
+
 
 /*   @font-face {  font-family: Oswald;  font-style: normal;  font-weight: 200 700;  font-display: swap;  src: url("/fonts/Oswald.woff2") format("woff2");}
 
