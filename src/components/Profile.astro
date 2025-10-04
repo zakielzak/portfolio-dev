@@ -23,7 +23,11 @@ const allTechs: TechID[] = [
 ];
 ---
 
-<section id="about-section" class="mt-22">
+<section
+  id="profile-section"
+  class="mt-22 animated-section"
+  data-section-name="Profile"
+>
   <div
     class="font-vcr font-semibold uppercase flex shrink-0 gap-2 items-center text-2xl tracking-wide"
   >
@@ -49,8 +53,9 @@ const allTechs: TechID[] = [
           have around 1.5 years of hands-on experience through personal projects.
         </p>
       </div>
-      <div class="flex items-end justify-between mt-auto"></div>
-      <!-- Wanna know more about me? -->
+      <a class="flex items-end justify-between mt-auto text-sm font-semibold" href="bio">
+        Wanna know more about me? Check this
+      </a>
     </div>
     <div
       class="row-span-4 col-start-1 row-start-7 col-span-2 border px-4 flex gap-2 items-center rounded-sm shadow-xs"
@@ -63,7 +68,10 @@ const allTechs: TechID[] = [
           music, or exploring the latest tech trends. I’m always down for
           hearing about new projects, so feel free to drop me a line.
         </p>
-        <a class="flex gap-2 font-vcr font-black text-lg items-center">
+        <a
+          class="flex gap-2 font-vcr font-black text-lg items-center"
+          href="contact"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -200,7 +208,7 @@ const allTechs: TechID[] = [
     </div>
 
     <div
-      class="col-start-3 col-span-2 row-span-7 bg-black dark:bg-white polygon-2 relative overflow-hidden shadow-xs "
+      class="col-start-3 col-span-2 row-span-7 bg-black dark:bg-white polygon-2 relative overflow-hidden shadow-xs"
     >
       <div
         class="absolute inset-[1px]

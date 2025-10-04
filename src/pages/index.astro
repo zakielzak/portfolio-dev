@@ -4,6 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import Intro from "../components/Intro.astro";
 import ProjectCard from "src/components/ProjectCard.astro";
 import Profile from "src/components/Profile.astro";
+import AnimateOnScroll from "src/components/AnimateOnScroll.svelte";
 
 import type { TechID } from "../const";
 import { m } from "../paraglide/messages";
@@ -64,7 +65,7 @@ const projects = [
 <Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
   <Intro />
 
-  <section id="projects-section" class="mt-[700px] flex flex-col gap-14">
+  <section id="projects-section" class="mt-[700px] flex flex-col gap-24">
     {
       projects.map((p, i) => (
         <ProjectCard
@@ -84,36 +85,96 @@ const projects = [
   <Profile />
 
   <script>
-    import { scroll, animate } from "motion";
+    import { scroll, animate, inView } from "motion";
 
     const projects = document.querySelectorAll<HTMLElement>(".project-item");
 
-    if (projects.length === 0) {
-      console.warn(
-        "No se encontraron todos los elementos necesarios para la animación de scroll."
-      );
-    }
+ 
+      // 1. Selectores de las secciones a animar.
+      // Asegúrate de que tus componentes Intro y Profile tengan estos ID/clases.
+      const sectionSelectors = [
+        "#intro-section",
+        "#profile-section",
+      ];
+
+      // 2. Opciones y Parámetros de la Animación
+      const INITIAL_Y_OFFSET = 50; // Desplazamiento inicial (abajo)
+      const DURATION = 0.8; // Duración de la animación en segundos
+      const EASE = [0.17, 0.55, 0.55, 1]; // Curva de easing premium (easeInOutQuart)
+
+      sectionSelectors.forEach((selector) => {
+        const section = document.querySelector(selector);
+
+        if (!section) {
+          console.warn(
+            `Sección no encontrada: ${selector}. Saltando animación.`
+          );
+          return;
+        }
+
+        // --- Configuración de Estado Inicial (Cero Duración) ---
+        // Aplicamos el estado de 'origen' de la animación inmediatamente, sin transición.
+        animate(section, { opacity: 0, y: INITIAL_Y_OFFSET }, { duration: 0 });
+
+        // --- Detección y Disparo con inView ---
+        inView(
+          section,
+          (element) => {
+            // El callback se ejecuta cuando el elemento entra en la vista.
+
+            // Animación de entrada: de (opacity: 0, y: 50) a (opacity: 1, y: 0)
+            animate(
+              element,
+              { opacity: 1, transform: "translateY(0px)" },
+              {
+                duration: DURATION,
+                easing: EASE,
+              }
+            );
+
+            // LA CLAVE: No devolver nada; la animación se ejecuta solo una vez si inView está configurado correctamente.
+          },
+          {
+            // Opciones del Intersection Observer interno:
+            // Margen que dispara la animación antes de que la sección esté totalmente visible.
+            // -15% significa que la intersección se considera cuando el elemento está a 15% del borde inferior.
+            margin: "0px 0px -15% 0px",
+            // amount: "some" (predeterminado) es suficiente para un efecto de aparición.
+          }
+        );
+      });
+ 
 
     projects.forEach((project) => {
       const scrollOptions = {
         target: project,
         container: document.documentElement,
-
+        // La animación se ejecuta entre el 80% (entra) y el 20% (sale) del viewport.
         offset: ["start 80%", "end 20%"] as const,
       };
 
-      // --- ANIMACIÓN DE OPACIDAD ---
-      scroll((progress: number) => {
-        const opacity = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
-        animate(project, { opacity: opacity }, { duration: 0 });
-      }, scrollOptions as any);
+      // Parámetros de la animación
+      const MAX_SHRINK = 0.1; // Se encogerá un 10% (Scale irá de 1 a 0.9)
+      const MAX_Y_OFFSET = 50; // Desplazamiento máximo en píxeles (50px)
 
-      // --- ANIMACIÓN DE TRANSFORMACIÓN ---
       scroll((progress: number) => {
-        const translateY = (1 - progress) * 50;
+        const midPointProgress =
+          progress < 0.5
+            ? progress * 2 // 0.0 -> 1.0
+            : (1 - progress) * 2; // 1.0 -> 0.0
+
+        const scale = 1 - MAX_SHRINK + midPointProgress * MAX_SHRINK;
+
+        const opacity = midPointProgress;
+
+        const translateY = (1 - midPointProgress) * MAX_Y_OFFSET;
+
         animate(
           project,
-          { transform: `translateY(${translateY}px)` },
+          {
+            opacity: opacity,
+            transform: `translateY(${translateY}px) .scale(${scale})`,
+          },
           { duration: 0 }
         );
       }, scrollOptions as any);

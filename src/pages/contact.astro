@@ -1,0 +1,39 @@
+---
+import { Button } from "$lib/components/ui/button";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <div
+    class="flex w-full justify-center items-center"
+  >
+    <div class="w-full flex flex-col gap-4 max-w-[600px]">
+      <span class="font-semibold tracking-tight text-3xl font-fig">Contact me</span>
+      <input type="text" class="border" />
+      <textarea name="" id="" class="border"></textarea>
+      <Button
+        class="cursor-pointer clip rounded-none text-lg font-fig font-semibold bg-black dark:bg-white tracking-wide px-8 py-6 w-1/3 transition duration-300 hover:scale-[1.04] active:scale-[0.98]"
+      >
+        Case study
+
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-right"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+              d="M5 12l14 0"></path><path d="M13 18l6 -6"></path><path
+              d="M13 6l6 6"></path></svg
+          >
+        </div>
+      </Button>
+    </div>
+  </div>
+</Layout>
