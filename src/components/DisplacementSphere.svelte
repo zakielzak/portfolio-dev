@@ -1,16 +1,18 @@
+
+
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import { writable } from 'svelte/store';
   import {
     AmbientLight, DirectionalLight, LinearSRGBColorSpace, Mesh, MeshPhongMaterial,
     PerspectiveCamera, Scene, SphereGeometry, UniformsUtils, Vector2, WebGLRenderer,
-    Object3D
+    Object3D,
   } from 'three';
   
-  // Utilidades importadas
+  // Utilidades (debes asegurarte que $lib/threeUtils exista y contenga throttle)
   import { cleanRenderer, cleanScene, removeLights, throttle } from '../lib/three';
   
-  // Shaders: Asegúrate que estas rutas y la sintaxis ?raw funcionen en tu Vite/Astro config.
+  // Shaders
   import fragmentShader from './displacement-sphere-fragment.glsl?raw';
   import vertexShader from './displacement-sphere-vertex.glsl?raw';
 
@@ -39,9 +41,9 @@
   let windowSize = { width: 0, height: 0 };
   let animationFrame: number;
   const start = Date.now();
-  let onMouseMove: (event: MouseEvent) => void | undefined;
+  let onMouseMove: ((event: MouseEvent) => void) | undefined;
   
-  // La función de inicialización aislada para reuso
+  // Función para inicializar Three.js (puede ser llamada de nuevo si el contexto se pierde)
   const initThree = () => {
     const { innerWidth, innerHeight } = window;
     
@@ -54,7 +56,7 @@
     renderer.setPixelRatio(1);
     renderer.outputColorSpace = LinearSRGBColorSpace; 
 
-    // 2. Camera
+    // 2. Camera y Scene
     camera = new PerspectiveCamera(54, innerWidth / innerHeight, 0.1, 100);
     camera.position.z = 52; 
     scene = new Scene(); 
@@ -62,7 +64,6 @@
     // 3. Material y Shaders
     material = new MeshPhongMaterial();
     material.onBeforeCompile = shader => { 
-      // Se garantiza que uniforms se llene en el primer render
       uniforms = UniformsUtils.merge([ 
         shader.uniforms, 
         { time: {  value: 0 } }, 
@@ -79,7 +80,7 @@
     (sphere as Object3D & { modifier?: number }).modifier = Math.random(); 
     scene.add(sphere);
 
-    // Forzar el primer render para ejecutar onBeforeCompile y llenar 'uniforms'
+    // 🔑 CLAVE: Forzar el primer render para ejecutar onBeforeCompile y llenar 'uniforms'
     renderer.render(scene, camera);
   }
 
@@ -87,12 +88,14 @@
   // 🛠️ FUNCIÓN DE ANIMACIÓN
   // -----------------------------------------------------------------
   const animateLoop = () => { 
-    // Comprobación de existencia para evitar el TypeError
-    if (!sphere || !uniforms || !renderer || !camera) return;
+    if (!sphere || !uniforms || !renderer || !camera) {
+        cancelAnimationFrame(animationFrame);
+        return;
+    }
 
     uniforms.time.value = 0.00005 * (Date.now() - start); 
 
-    sphere.rotation.z += 0.001; 
+    sphere.rotation.z += 0.0006; 
     sphere.rotation.x = $rotationX; 
     sphere.rotation.y = $rotationY; 
 
@@ -101,27 +104,32 @@
   }; 
 
   // -----------------------------------------------------------------
-  // $ REACCIONES REACTIVAS (Gestión del Ciclo de Vida)
+  // $ REACCIONES REACTIVAS
   // -----------------------------------------------------------------
 
-  // 1. Luces / Tema (Simula useEffect [theme])
+  // 1. Luces / Tema (CORRECCIÓN: Se crean siempre que scene exista)
   $: {
-    if (scene && lights.length) {
-      removeLights(lights);
-      
-      const dirLight = new DirectionalLight(0xffffff, theme === 'light' ? 1.8 : 2.0);
-      const ambientLight = new AmbientLight(0xffffff, theme === 'light' ? 2.7 : 0.4);
+    if (scene) { 
+        if (lights.length > 0) {
+            removeLights(lights);
+        }
+        
+        const dirLightIntensity = theme === 'light' ? 1.8 : 2.0;
+        const ambientLightIntensity = theme === 'light' ? 2.7 : 0.4;
 
-      dirLight.position.z = 200;
-      dirLight.position.x = 100;
-      dirLight.position.y = 100;
+        const dirLight = new DirectionalLight(0xffffff, dirLightIntensity);
+        const ambientLight = new AmbientLight(0xffffff, ambientLightIntensity);
 
-      lights = [dirLight, ambientLight];
-      lights.forEach(light => scene.add(light));
+        dirLight.position.z = 200;
+        dirLight.position.x = 100;
+        dirLight.position.y = 100;
+
+        lights = [dirLight, ambientLight];
+        lights.forEach(light => scene.add(light));
     }
   }
 
-  // 2. Resize / Posición de Esfera (Simula useEffect [reduceMotion, windowSize, media])
+  // 2. Resize / Posición de Esfera
   $: {
     if (renderer && camera && sphere && windowSize.width && media) {
       const { width, height } = windowSize;
@@ -131,6 +139,7 @@
       camera.aspect = width / adjustedHeight;
       camera.updateProjectionMatrix();
 
+      // Ajuste de posición (Media Queries)
       if (width <= media.mobile) {
         sphere.position.x = 14; sphere.position.y = 10;
       } else if (width <= media.tablet) {
@@ -145,7 +154,7 @@
     }
   }
 
-  // 3. Mouse Move (Simula useEffect [isInViewport, reduceMotion])
+  // 3. Mouse Move
   $: {
     if (typeof window !== 'undefined') {
       if (onMouseMove) window.removeEventListener('mousemove', onMouseMove);
@@ -165,16 +174,13 @@
     }
   }
 
-  // 4. Loop de Animación (Simula useEffect [isInViewport, reduceMotion] - CRÍTICO)
+  // 4. Loop de Animación (CORRECCIÓN VITAL: Iniciar/Detener)
   $: {
-    // Si la esfera no está lista, no hacemos nada.
     if (sphere && uniforms && renderer) {
-        // Iniciar/Detener el loop
         if (!reduceMotion && isInViewport) {
             cancelAnimationFrame(animationFrame); 
             animateLoop(); // Inicia el loop
         } else {
-            // Detiene el loop
             cancelAnimationFrame(animationFrame); 
             // Renderiza un frame estático si está dentro, pero con movimiento reducido
             if (reduceMotion && renderer && scene && camera) {
@@ -189,26 +195,25 @@
   // -----------------------------------------------------------------
 
   onMount(() => {
-    // 1. Setup inicial
+    // 1. Setup inicial y Reduced Motion
     if (typeof window !== 'undefined') {
       reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
-    // 2. Manejo de Contexto Perdido (Prevención de errores de THREE.WebGLRenderer: Context Lost)
+    // 2. Manejo de Contexto Perdido
     const handleContextLost = (event: Event) => {
         event.preventDefault(); 
-        console.error("WebGL Context Lost. Cleaning up resources.");
-        cancelAnimationFrame(animationFrame);
-        // Aquí podrías destruir y recrear si la recuperación automática falla
+        console.error("WebGL Context Lost. Resources cleaned up.");
+        cancelAnimationFrame(animationFrame); 
     };
+    canvasRef.addEventListener('webglcontextlost', handleContextLost);
 
-    // 3. Observers y Listeners
+    // 3. Observers de ventana y vista
     const handleResize = () => {
       windowSize = { width: window.innerWidth, height: window.innerHeight };
     };
     handleResize(); 
     window.addEventListener('resize', handleResize);
-    canvasRef.addEventListener('webglcontextlost', handleContextLost);
     
     const observer = new IntersectionObserver(([entry]) => {
       isInViewport = entry.isIntersecting;
@@ -218,8 +223,9 @@
     // 4. Inicialización de Three.js
     initThree();
     
-    // Inicializar luces (trigger del primer $:)
+    // Disparar la lógica de luces y posición inicial por reactividad
     theme = theme; 
+    windowSize = windowSize; 
 
     // Cleanup
     return () => {
@@ -242,12 +248,10 @@
 </canvas>
 
 <style>
-  /* Aquí puedes poner tus estilos CSS importados o Tailwind/Globales */
   canvas {
     z-index: -1; 
     min-height: 100vh;
     display: block;
     touch-action: none;
-    /* transition: opacity 3s ease; -- Solo si deseas una transición de entrada -- */
   }
 </style>
