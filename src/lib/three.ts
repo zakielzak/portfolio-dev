@@ -82,3 +82,31 @@ export const getChild = (name: any, object: { traverse: (arg0: (child: any) => v
 
   return node;
 };
+
+export function throttle<T extends (...args: any[]) => void>(
+  func: T,
+  limit: number
+): T {
+  let lastRan: number | undefined;
+  let timeout: ReturnType<typeof setTimeout> | undefined;
+
+  return function (this: any, ...args: any[]) {
+    const context = this;
+    // Si no se ha ejecutado nunca, o ha pasado suficiente tiempo
+    if (!lastRan) {
+      func.apply(context, args);
+      lastRan = Date.now();
+    } else {
+      // Limpiar el timeout anterior para evitar llamadas en exceso
+      if (timeout) clearTimeout(timeout);
+
+      // Establecer un nuevo timeout para ejecutar al final del límite
+      timeout = setTimeout(() => {
+        if (Date.now() - (lastRan || 0) >= limit) {
+          func.apply(context, args);
+          lastRan = Date.now();
+        }
+      }, limit - (Date.now() - (lastRan || 0)));
+    }
+  } as T;
+}
