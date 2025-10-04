@@ -1,13 +1,54 @@
 ---
 import LanguageSelector from "../components/LanguageSelector.svelte";
 import ThemeToggle from "../components/ThemeToggle.svelte";
+
 import { spring } from "motion";
-import GithubIcon from "@lucide/svelte/icons/github";
+
+const links = [
+  {
+    href: "mailto:you@mail.com",
+    label: "Mail",
+    icon: ` <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="icon icon-tabler icons-tabler-filled icon-tabler-mail"
+              ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z"
+              ></path><path
+                d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z"
+              ></path></svg
+            >`,
+  },
+  {
+    href: "https://x.com",
+    label: "LinkedIn",
+    icon: `<svg  xmlns="http://www.w3.org/2000/svg"  width="26"  height="26"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-brand-linkedin"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-9 8a1 1 0 0 0 -1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0 -1 -1m6 0a3 3 0 0 0 -1.168 .236l-.125 .057a1 1 0 0 0 -1.707 .707v5a1 1 0 0 0 2 0v-3a1 1 0 0 1 2 0v3a1 1 0 0 0 2 0v-3a3 3 0 0 0 -3 -3m-6 -3a1 1 0 0 0 -.993 .883l-.007 .127a1 1 0 0 0 1.993 .117l.007 -.127a1 1 0 0 0 -1 -1" /></svg>`,
+  },
+  {
+    href: "https://github.com/zakielzak",
+    label: "GitHub",
+    icon: `<svg
+              viewBox="0 0 1024 1024"
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
+                transform="scale(64)"
+                fill="currentColor"></path>
+            </svg>`,
+  },
+];
 ---
 
 <style define:vars={{ spring: spring(9, 0.2) }}>
-  /* Header oculto inicialmente */
-  header {
+  .Header {
     opacity: 0;
     transform: translateY(-20px);
     animation: slideDown 0.8s var(--spring) forwards;
@@ -23,74 +64,45 @@ import GithubIcon from "@lucide/svelte/icons/github";
   }
 </style>
 
-<header class="fixed w-[1100px]  flex justify-between items-center py-12">
-  <a href="#" class="text-4xl font-bold font-fig">Z</a>
-  <!-- <div class="border size-12 rounded-2xl shadow-xs"></div> -->
-
-  <div class="flex items-center">
-    <LanguageSelector client:load />
+<div
+  class="fixed inset-0 w-full max-w-[1100px] mx-auto Header pointer-events-none"
+>
+  <header
+    class="py-12 flex justify-between items-center w-full pointer-events-auto"
+  >
+    <a href="#" class="text-4xl font-bold font-fig">Z</a>
     <ThemeToggle client:load />
-  </div>
-
-  <div class="absolute -right-8 top-[730px] rotate-270 font-vcr ">// Zakiel ©</div>
-
-  <div class="flex flex-col items-start gap-6 absolute top-[620px]">
-    <div class="cursor-pointer relative right-0.5">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="icon icon-tabler icons-tabler-filled icon-tabler-mail"
-        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
-          d="M22 7.535v9.465a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-9.465l9.445 6.297l.116 .066a1 1 0 0 0 .878 0l.116 -.066l9.445 -6.297z"
-        ></path><path
-          d="M19 4c1.08 0 2.027 .57 2.555 1.427l-9.555 6.37l-9.555 -6.37a2.999 2.999 0 0 1 2.354 -1.42l.201 -.007h14z"
-        ></path></svg
-      >
+  </header>
+  <nav
+    class="absolute top-20 bottom-0 left-0 hidden md:flex flex-col items-center justify-end pb-10 pointer-events-auto"
+  >
+    <div class="flex-grow mb-4"></div>
+    <div class="flex flex-col items-center gap-6">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="cursor-pointer hover:text-black/60 dark:text-white/60 transition"
+            aria-label={l.label}
+            set:html={l.icon}
+          />
+        ))
+      }
     </div>
-    <div class="cursor-pointer">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid"
-        viewBox="0 0 256 226"
-        width="20"
-        height="20"
-      >
-        <path
-          fill="white"
-          d="M55.491 15.172c29.35 22.035 60.917 66.712 72.509 90.686 11.592-23.974 43.159-68.651 72.509-90.686C221.686-.727 256-13.028 256 26.116c0 7.818-4.482 65.674-7.111 75.068-9.138 32.654-42.436 40.983-72.057 35.942 51.775 8.812 64.946 38 36.501 67.187-54.021 55.433-77.644-13.908-83.696-31.676-1.11-3.257-1.63-4.78-1.637-3.485-.008-1.296-.527.228-1.637 3.485-6.052 17.768-29.675 87.11-83.696 31.676-28.445-29.187-15.274-58.375 36.5-67.187-29.62 5.041-62.918-3.288-72.056-35.942C4.482 91.79 0 33.934 0 26.116 0-13.028 34.314-.727 55.491 15.172Z"
-        ></path>
-      </svg>
+  </nav>
+  <div
+    class="absolute top-20 bottom-0 right-0 hidden md:flex flex-col items-center justify-end pb-10 pointer-events-auto"
+  >
+    <div class="rotate-90 origin-top-right absolute top-21 right-0">
+      <LanguageSelector client:load />
     </div>
-    <div class="cursor-pointer relative right-0.5">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        class="icon icon-tabler icons-tabler-filled icon-tabler-brand-x"
-        ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
-          d="M8.267 3a1 1 0 0 1 .73 .317l.076 .092l4.274 5.828l5.946 -5.944a1 1 0 0 1 1.497 1.32l-.083 .094l-6.163 6.162l6.262 8.54a1 1 0 0 1 -.697 1.585l-.109 .006h-4.267a1 1 0 0 1 -.73 -.317l-.076 -.092l-4.276 -5.829l-5.944 5.945a1 1 0 0 1 -1.497 -1.32l.083 -.094l6.161 -6.163l-6.26 -8.539a1 1 0 0 1 .697 -1.585l.109 -.006h4.267z"
-        ></path></svg
-      >
-    </div>
-    <div class="cursor-pointer">
-      <svg
-        viewBox="0 0 1024 1024"
-        xmlns="http://www.w3.org/2000/svg"
-        width="22"
-        height="22"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z"
-          transform="scale(64)"
-          fill="#ffff"></path>
-      </svg>
+    <div class="flex-grow mt-28 mb-4"></div>
+    <div
+      class="font-vcr whitespace-nowrap [writing-mode:sideways-lr] pr-1 uppercase"
+    >
+      // Zakiel ©
     </div>
   </div>
-</header>
+</div>

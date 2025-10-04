@@ -1,0 +1,64 @@
+---
+import { m } from "../paraglide/messages";
+import { spring } from "motion";
+---
+
+<style
+  define:vars={{
+    mainTitle: spring(5, 0.4),
+    introText: spring(6, 0.1),
+  }}
+>
+  .main-title {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInBounce 2s var(--mainTitle) forwards;
+    animation-delay: 1s;
+    will-change: transform, opacity;
+  }
+
+  .intro-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInSmooth 1s var(--introText) forwards;
+    animation-delay: 2.5s;
+    will-change: transform, opacity;
+  }
+
+  @keyframes slideInBounce {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInSmooth {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<section class="" id="intro-section">
+  <!-- Juan Mercedes, Software Developer , Frontend , Backend -->
+  <!-- <h1
+        id="greeting-text"
+        class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title"
+      >
+        
+        {m.greetings()} -->
+  <!-- — Web & Software Developer. -->
+  <!-- </h1> -->
+  <div
+    id="greeting-text"
+    class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
+  >
+    <h1 class="font-sharetech">Hi there,</h1>
+    <h2 class="font-vcr">here Juan</h2>
+  </div>
+
+  <p id="intro-text" class="text-xl mt-2 intro-text font-offbit">
+    {m.intro()}
+  </p>
+</section>

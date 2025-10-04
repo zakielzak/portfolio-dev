@@ -1,0 +1,234 @@
+---
+import { m } from "../paraglide/messages";
+import type { TechID } from "../const";
+import { TECHS } from "../const";
+
+const allTechs: TechID[] = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "C#",
+  "Rust",
+  "Astro",
+  "React",
+  "Svelte",
+  "TailwindCSS",
+  "Three.js",
+  "Git",
+  "AWS",
+  "MySQL",
+];
+---
+
+<section id="about-section" class="mt-22">
+  <div
+    class="font-vcr font-semibold uppercase flex shrink-0 gap-2 items-center text-2xl tracking-wide"
+  >
+    <div class="size-5 bg-black dark:bg-white rounded"></div>
+    {m.about_title()}
+  </div>
+
+  <div class="mt-6 grid grid-cols-4 grid-rows-14 gap-4">
+    <div
+      class="col-span-2 row-span-6 col-start-1 border font-fig px-4 py-3.5 flex flex-col rounded-sm shadow-xs"
+    >
+      <div class="flex items-center gap-2">
+        <span class="text-lg font-semibold">Made it this far? Awesome! </span>
+        <!-- <div class="w-12 h-1 bg-black/60 rounded-xs"></div> -->
+      </div>
+
+      <div class="flex flex-col justify-between gap-2">
+        <p
+          class="text-xl font-medium tracking-tight text-black/65 dark:text-white/65"
+        >
+          <!-- Let me introduce myself: --> I’m Juan Mercedes, a Systems Engineering
+          student specializing in full-stack web development and UI/UX design. I
+          have around 1.5 years of hands-on experience through personal projects.
+        </p>
+      </div>
+      <div class="flex items-end justify-between mt-auto"></div>
+      <!-- Wanna know more about me? -->
+    </div>
+    <div
+      class="row-span-4 col-start-1 row-start-7 col-span-2 border px-4 flex gap-2 items-center rounded-sm shadow-xs"
+    >
+      <div class="flex flex-col gap-10">
+        <p
+          class="text-base font-medium tracking-tight text-black/65 dark:text-white/65 font-fig"
+        >
+          In my spare time, you’ll find me playing video games, listening to
+          music, or exploring the latest tech trends. I’m always down for
+          hearing about new projects, so feel free to drop me a line.
+        </p>
+        <a class="flex gap-2 font-vcr font-black text-lg items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-send-horizontal-icon lucide-send-horizontal"
+            ><path
+              d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"
+            ></path><path d="M6 12h16"></path></svg
+          >
+          Send me a message
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="row-span-2 col-start-1 row-start-11 border flex flex-col items-center justify-center gap-1 px-4 rounded-sm shadow-xs"
+    >
+      <div class="size-4 bg-black dark:bg-white rounded-full"></div>
+      <span class="text-xl font-semibold font-fig">Available for work!</span>
+    </div>
+    <div
+      class="row-span-4 col-start-2 row-start-11 border px-4 py-3.5 text-xs flex flex-col justify-between rounded-sm shadow-xs"
+    >
+      <span class="text-lg font-semibold">Connect with me</span>
+
+      <div
+        class="flex flex-col gap-1.5 text-sm font-fig font-medium tracking-wide dark:text-white/50 text-black/50"
+      >
+        <a class="flex items-center gap-2 hover:underline" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-linkedin-icon lucide-linkedin"
+            ><path
+              d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+            ></path><rect width="4" height="12" x="2" y="9"></rect><circle
+              cx="4"
+              cy="4"
+              r="2"></circle></svg
+          >
+          Juan Manuel
+        </a>
+        <a class="flex items-center gap-2 hover:underline" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-mail-icon lucide-mail"
+            ><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect
+              x="2"
+              y="4"
+              width="20"
+              height="16"
+              rx="2"></rect></svg
+          >
+          me@gmail.com
+        </a>
+
+        <a class="flex items-center gap-2 hover:underline" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="icon icon-tabler icons-tabler-outline icon-tabler-brand-github"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+              d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"
+            ></path></svg
+          >
+          zakiel_zak
+        </a>
+        <a class="flex items-center gap-2 hover:underline" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-coffee-icon lucide-coffee"
+            ><path d="M10 2v2"></path><path d="M14 2v2"></path><path
+              d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"
+            ></path><path d="M6 2v2"></path></svg
+          >
+          Buy me a coffe
+        </a>
+      </div>
+    </div>
+    <div
+      class="col-span-2 row-span-5 row-start-10 col-start-3 border px-4 py-3.5 font-fig flex flex-col gap-2 w-full font-semibold text-lg rounded-sm shadow-xs"
+    >
+      Techstack
+
+      <div class="flex gap-3 flex-wrap">
+        {
+          allTechs.map((id) => {
+            const tech = TECHS[id];
+            return (
+              <div class="text-[11px] font-semibold font-fig border p-1.5 rounded flex items-center justify-between gap-1">
+                <span set:html={tech.svg} />
+                {tech.name}
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <div
+      class="col-start-3 col-span-2 row-span-7 bg-black dark:bg-white polygon-2 relative overflow-hidden shadow-xs "
+    >
+      <div
+        class="absolute inset-[1px]
+                    bg-black/80 dark:bg-gray-800 polygon-2"
+      >
+        <img
+          src="https://pbs.twimg.com/media/G2WC_gwaUAAgUuU?format=jpg&name=small"
+          alt="Imagen de Portafolio"
+          class="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
+    </div>
+
+    <div
+      class="col-span-2 col-start-3 row-start-8 row-span-2 border font-fig flex flex-col items-center justify-center relative group overflow-hidden transition-all hover:bg-black/80 dark:hover:bg-white/80 rounded-sm shadow-xs"
+    >
+      <span
+        class="text-2xl font-semibold transition-opacity duration-500 ease-in-out group-hover:opacity-0 group-hover:invisible"
+        >"Make it exist first, then improve it."</span
+      >
+
+      <p
+        class="text-xs font-medium flex px-4 items-center justify-center absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 text-white dark:text-black"
+      >
+        I focus on starting with a simple but solid foundation, and then adding
+        value by refining it with details that truly enhance it. This iterative
+        process allows me to work efficiently and deliver high-quality results.
+      </p>
+    </div>
+  </div>
+</section>

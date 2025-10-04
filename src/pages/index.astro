@@ -1,445 +1,157 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import "@fontsource/share-tech-mono";
-import "@fontsource/vt323";
-import "@fontsource/metropolis";
-import "@fontsource-variable/figtree";
 
-import StickyProjects from "../components/StickyProjects.svelte";
-
-import { m } from "../paraglide/messages";
+import Intro from "../components/Intro.astro";
 import ProjectCard from "src/components/ProjectCard.astro";
-import { spring } from "motion";
-
-import TechBadge from "../components/techBadge.astro";
+import Profile from "src/components/Profile.astro";
 
 import type { TechID } from "../const";
+import { m } from "../paraglide/messages";
 
-const selectedTechs: TechID[] = [
-  "HTML",
-  "CSS",
-  "JavaScript",
-  "TypeScript",
-  "Node.js",
-  "Python",
-  "C#",
-  "Rust",
-  "Astro",
-  "React",
-  "Svelte",
-  "TailwindCSS",
-  "Three.js",
-  "Git",
-  "AWS",
-  "MySQL",
+const projects = [
+  {
+    label: "MUSIC_PLAYER_APP",
+    title: m.project_music_title(),
+    description: m.project_music_desc(),
+
+    features: [
+      m.project_music_f1(),
+      m.project_music_f2(),
+      m.project_music_f3(),
+      m.project_music_f4(),
+    ],
+    techStack: [
+      "TypeScript",
+      "React",
+      "Rust",
+      "HTML",
+      "TailwindCSS",
+    ] as TechID[],
+    caseStudyHref: "/projects/music-app",
+    githubHref: "https://github.com/your-repo-music-app",
+  },
+  {
+    label: "IMAGE_MANAGER_APP",
+    title: m.project_image_title(),
+    description: m.project_image_desc(),
+    features: [
+      m.project_image_f1(),
+      m.project_image_f2(),
+      m.project_image_f3(),
+      m.project_image_f4(),
+    ],
+    techStack: ["TypeScript", "React", "Rust"] as TechID[],
+    caseStudyHref: "/projects/image-manager",
+    githubHref: "https://github.com/your-repo-image-manager",
+  },
+  {
+    label: "PRODUCTIVITY_APP",
+    title: m.project_productivity_title(),
+    description: m.project_productivity_desc(),
+    features: [
+      m.project_productivity_f1(),
+      m.project_productivity_f2(),
+      m.project_productivity_f3(),
+      m.project_productivity_f4(),
+    ],
+    techStack: ["TypeScript", "React", "Rust"] as TechID[],
+    caseStudyHref: "/projects/productivity-app",
+    githubHref: "https://github.com/your-repo-productivity-app",
+  },
 ];
 ---
 
 <Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
-  <style
-    define:vars={{
-      mainTitle: spring(5, 0.4),
-      introText: spring(6, 0.1),
-      springFast: spring(9, 0.2),
-      springDeliberate: spring(9, 0.05),
-    }}
-  >
-    .main-title {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideInBounce 2s var(--mainTitle) forwards;
-      animation-delay: 1s;
-      will-change: transform, opacity;
+  <Intro />
+
+  <section id="projects-section" class="mt-[700px] flex flex-col gap-14">
+    {
+      projects.map((p, i) => (
+        <ProjectCard
+          index={i + 1}
+          label={p.label}
+          title={p.title}
+          description={p.description}
+          features={p.features}
+          techStack={p.techStack}
+          caseStudyHref={p.caseStudyHref}
+          githubHref={p.githubHref}
+        />
+      ))
     }
+  </section>
 
-    /* Párrafo intro - oculto inicialmente */
-    .intro-text {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideInSmooth 1s var(--introText) forwards;
-      animation-delay: 2.5s;
-      will-change: transform, opacity;
-    }
+  <Profile />
 
-    /* Título proyectos - oculto inicialmente */
-    .projects-title {
-      opacity: 1;
-      /*  transform: translateY(30px);
-      animation: slideInBounce 0.8s var(--springBounce) forwards;
-      animation-delay: 3s; */
-      will-change: transform, opacity;
-    }
+  <script>
+    import { scroll, animate } from "motion";
 
-    /* Tarjetas de proyecto - ocultas inicialmente */
-    .project-card {
-      opacity: 1;
-      /*   transform: translateY(30px);
-      animation: slideInFast 0.6s var(--springFast) forwards; */
-      will-change: transform, opacity;
-    }
-    .project-card:nth-child(1) {
-      animation-delay: 4s;
-    }
-    .project-card:nth-child(2) {
-      animation-delay: 4.4s;
-    }
-    .project-card:nth-child(3) {
-      animation-delay: 4.8s;
-    }
+    const projects = document.querySelectorAll<HTMLElement>(".project-item");
 
-    /* Sección about - oculta inicialmente */
-    .about-section {
-      opacity: 1;
-      /* transform: translateY(30px); */
-      /*  animation: slideInDeliberate 1.5s var(--springDeliberate) forwards;
-      animation-delay: 5.5s; */
-      will-change: transform, opacity;
-    }
-
-    /* Keyframes */
-    @keyframes slideInBounce {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInSmooth {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInFast {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInDeliberate {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
-
-  <div class="flex-1">
-    <!-- Juan Mercedes, Software Developer , Frontend , Backend -->
-    <section class="">
-      <!-- <h1
-        id="greeting-text"
-        class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title"
-      >
-        {m.greetings()} -->
-      <!-- — Web & Software Developer. -->
-      <!-- </h1> -->
-      <div
-        id="greeting-text"
-        class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
-      >
-        <h1 class="font-sharetech">Hi there,</h1>
-        <h2 class="font-vcr">here Juan</h2>
-      </div>
-
-      <p id="intro-text" class="text-xl mt-2 intro-text font-offbit">
-        {m.intro()}
-      </p>
-
-      <div class="mt-12 flex flex-col gap-8">
-        <section class="mt-[600px]">
-          <div class="projects-pin-container">
-            <h2
-              id="projects-title"
-              class="before:content-['']= before:rounded-[4px]= before:inline-block= before:size-4- dark:before:bg-white/80- before:bg-black- before:mr-2- shrink-0 text-4xl font-offbit projects-title sticky top-0 md:top-13 uppercase."
-            >
-              <!-- {m.title_projects()} -->
-            </h2>
-            <div
-              id="projects-content-wrapper"
-              class="flex flex-col gap-14 mt-4"
-            >
-              <div
-                class="project-card
-              font-fig project-item project-card-wrapper"
-              >
-                <ProjectCard
-                  title={m.project_music_title()}
-                  description={m.project_music_desc()}
-                  features={[
-                    m.project_music_f1(),
-                    m.project_music_f2(),
-                    m.project_music_f3(),
-                    m.project_music_f4(),
-                  ]}
-                  techStack={[
-                    "TypeScript",
-                    "React",
-                    "Rust",
-                    "HTML",
-                    "TailwindCSS",
-                  ]}
-                  caseStudyHref="/projects/music-app"
-                  githubHref="https://github.com/your-repo-music-app"
-                />
-              </div>
-              <div
-                class="project-card
-              font-fig project-item project-card-wrapper"
-              >
-                <ProjectCard
-                  title={m.project_image_title()}
-                  description={m.project_image_desc()}
-                  features={[
-                    m.project_image_f1(),
-                    m.project_image_f2(),
-                    m.project_image_f3(),
-                    m.project_image_f4(),
-                  ]}
-                  techStack={["TypeScript", "React", "Rust"]}
-                  caseStudyHref="/projects/image-manager"
-                  githubHref="https://github.com/your-repo-music-app"
-                />
-              </div>
-              <div
-                class="project-card
-              font-fig project-item project-card-wrapper"
-              >
-                <ProjectCard
-                  title={m.project_productivity_title()}
-                  description={m.project_productivity_desc()}
-                  features={[
-                    m.project_productivity_f1(),
-                    m.project_productivity_f2(),
-                    m.project_productivity_f3(),
-                    m.project_productivity_f4(),
-                  ]}
-                  techStack={["TypeScript", "React", "Rust"]}
-                  caseStudyHref="/projects/productivity-app"
-                  githubHref="https://github.com/your-repo-music-app"
-                />
-              </div>
-           
-            </div>
-          </div>
-        </section>
-
-        <section class="mb-12 about-section">
-          <span class="font-offbit">{m.about_title()}</span>
-          <div class="mt-6 grid grid-cols-4 grid-rows-14 gap-4 ">
-            <div
-              class="col-span-2 row-span-6 col-start-1 border font-fig px-4 py-3.5 flex flex-col"
-            >
-              <div class="flex items-center gap-2">
-                <span class="text-lg font-semibold"
-                  >Made it this far? Awesome!
-                </span>
-                <!-- <div class="w-12 h-1 bg-black/60 rounded-xs"></div> -->
-              </div>
-
-              <div class="flex flex-col gap-2">
-                <p
-                  class="text-xl font-medium tracking-tight text-black/65 dark:text-white/65"
-                >
-                  <!-- Let me introduce myself: --> I’m Juan Mercedes, a Systems
-                  Engineering student specializing in full-stack web development
-                  and UI/UX design. I have around 1.5 years of hands-on experience
-                  through personal projects.
-                </p>
-              </div>
-            </div>
-            <div
-              class="row-span-4 col-start-1 row-start-7 col-span-2 border px-4 flex items-center"
-            >
-              <p
-                class="text-base font-medium tracking-tight text-black/65 dark:text-white/65 font-fig"
-              >
-                I combine a calm and empathetic attitude with a logical and
-                pragmatic mindset. Many describe me as a balance between empathy
-                and logic, this translates into concrete skills: clear
-                communication, strong teamwork, and high adaptability to design
-                effective solutions for real-world complex problems.
-              </p>
-            </div>
-
-            <div
-              class="row-span-4 col-start-1 row-start-11 border flex items-center px-4"
-            >
-              Profile Picture My favorite Animal is the fox
-            </div>
-            <div
-              class="row-span-4 col-start-2 row-start-11 border px-4 py-3.5 text-xs"
-            >
-              Wanna know more about me? <!-- Check this When I’m not immersed in
-              projects, you’ll find me playing video games, listening to music,
-              or exploring the latest tech trends. I enjoy blending creativity
-              with logical thinking. -->
-            </div>
-            <div
-              class="col-span-2 row-span-5 col-start-3 border px-4 py-3.5 font-fig flex flex-col gap-2 w-full font-semibold text-lg "
-            >
-              Techstack
-
-              <div class="flex gap-3 flex-wrap">
-                <TechBadge techs={selectedTechs} />
-              </div>
-            </div>
-            <!-- <div class="col-start-3 row-start-6 row-span-4 border px-4 py-3.5">
-              1.5 Years experience
-            </div>
-            <div class="col-start-4 row-start-6 row-span-4 border px-4 py-3.5">
-              Github Star
-            </div> -->
-            <div
-              class="col-start-3 col-span-2 row-start-8 row-span-4 border px-4 py-3.5"
-            >
-            </div>
-            <div
-              class="col-start-3 col-span-1 row-start-12 row-span-3 border px-4 py-3.5"
-            >
-            </div>
-            <div
-              class="col-start-4 col-span-1 row-start-12 row-span-3 border px-4 py-3.5"
-            >
-            </div>
-
-            <div
-              class="col-span-2 col-start-3 row-start-6 row-span-2 border font-fig flex flex-col items-center justify-center relative group overflow-hidden transition-all hover:bg-black/80 dark:hover:bg-white/80"
-            >
-              <span
-                class="text-2xl font-semibold transition-opacity duration-500 ease-in-out group-hover:opacity-0 group-hover:invisible"
-                >"Make it exist first, then improve it."</span
-              >
-
-              <p
-                class="text-xs font-medium flex px-4 items-center justify-center absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 text-white dark:text-black"
-              >
-                I focus on starting with a simple but solid foundation, and then
-                adding value by refining it with details that truly enhance it.
-                This iterative process allows me to work efficiently and deliver
-                high-quality results.
-              </p>
-            </div>
-            <!-- <div
-              class="col-span-2 col-start-3 row-start-12 row-span-3 border font-fig flex flex-col items-center justify-center relative"
-            >
-              Github History
-            </div> -->
-          </div>
-
-          <!--  <div class="flex flex-col gap-3">
-            <span class="font-semibold">{m.about_subtitle()}</span>
-            <p>
-              {m.about_p1()}
-            </p>
-
-            <p>
-              {m.about_p2()}
-            </p>
-
-            <p>
-              {m.about_p3()}
-            </p>
-
-            <p>
-              {m.about_p4()}
-            </p>
-
-            <span>Techstack</span>
-            <p>
-              {m.tech()}
-            </p>
-            <div class="flex gap-5 flex-wrap">
-              {techStack.map((tech) => <div>{tech}</div>)}
-            </div> -->
-        </section>
-      </div>
-    </section>
-  </div>
-</Layout>
-<script>
-  import { scroll, animate } from "motion";
-
-  const projects = document.querySelectorAll<HTMLElement>(".project-item");
-  const projectContainer = document.getElementById("projects-content-wrapper");
-  const projectTitle = document.getElementById("projects-title");
-
-  if (projects.length === 0 || !projectContainer || !projectTitle) {
-    console.warn(
-      "No se encontraron todos los elementos necesarios para la animación de scroll."
-    );
-  }
-
-  /**
-   * 3. Configuración y Animación de Scroll
-   * Se utiliza el patrón de 'scroll-linked animation' de Motion para enlazar
-   * la opacidad y posición de cada proyecto al progreso del scroll.
-   */
-  projects.forEach((project, index) => {
-    const scrollOptions = {
-      target: project,
-      container: document.documentElement,
-
-      // El problema estaba aquí. Aunque es un string[], lo definimos.
-      offset: ["start 80%", "end 20%"] as const, // Usamos 'as const' para tipificar como tupla estricta
-    };
-
-    // Usamos una aserción de tipo genérica al llamar a 'scroll()' para
-    // que TypeScript use la inferencia del tipo de opciones que espera la función.
-    // Esto es más simple y efectivo que importar tipos internos.
-
-    // --- ANIMACIÓN DE OPACIDAD ---
-    scroll((progress: number) => {
-      const opacity = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
-      animate(project, { opacity: opacity }, { duration: 0 });
-    }, scrollOptions as any); // <-- Aserción 'any' en la llamada para forzar compatibilidad
-
-    // --- ANIMACIÓN DE TRANSFORMACIÓN ---
-    scroll((progress: number) => {
-      const translateY = (1 - progress) * 50;
-      animate(
-        project,
-        { transform: `translateY(${translateY}px)` },
-        { duration: 0 }
+    if (projects.length === 0) {
+      console.warn(
+        "No se encontraron todos los elementos necesarios para la animación de scroll."
       );
-    }, scrollOptions as any); // <-- Aserción 'any' en la llamada para forzar compatibilidad
-  });
+    }
 
-  // Ejecutar después de que el DOM esté listo
-  import { textScramble } from "../lib/textScramble.ts";
+    projects.forEach((project) => {
+      const scrollOptions = {
+        target: project,
+        container: document.documentElement,
 
-  const greetingElement = document.getElementById("greeting-text");
-  const introElement = document.getElementById("intro-text");
+        offset: ["start 80%", "end 20%"] as const,
+      };
 
-  if (introElement) {
-    // Opcional: definir un conjunto de caracteres japoneses personalizado
-    const japaneseChars =
-      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
-    /* const japaneseChars =
+      // --- ANIMACIÓN DE OPACIDAD ---
+      scroll((progress: number) => {
+        const opacity = progress < 0.5 ? progress * 2 : (1 - progress) * 2;
+        animate(project, { opacity: opacity }, { duration: 0 });
+      }, scrollOptions as any);
+
+      // --- ANIMACIÓN DE TRANSFORMACIÓN ---
+      scroll((progress: number) => {
+        const translateY = (1 - progress) * 50;
+        animate(
+          project,
+          { transform: `translateY(${translateY}px)` },
+          { duration: 0 }
+        );
+      }, scrollOptions as any);
+    });
+
+    import { textScramble } from "../lib/textScramble.ts";
+
+    const greetingElement = document.getElementById("greeting-text");
+    const introElement = document.getElementById("intro-text");
+
+    if (introElement) {
+      // Opcional: definir un conjunto de caracteres japoneses personalizado
+      const japaneseChars =
+        "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
+      /* const japaneseChars =
         "アァカサタナハマヤ"; */
 
-    textScramble(introElement, {
-      duration: 1.2, // Una duración más larga para un efecto más dramático
-      speed: 0.05,
-      characterSet: japaneseChars,
-      delay: 2.5,
-    });
-  }
+      textScramble(introElement, {
+        duration: 1.2, // Una duración más larga para un efecto más dramático
+        speed: 0.05,
+        characterSet: japaneseChars,
+        delay: 2.5,
+      });
+    }
 
-  if (greetingElement) {
-    // Opcional: definir un conjunto de caracteres japoneses personalizado
-    const japaneseChars =
-      "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
-    /* const japaneseChars =
+    if (greetingElement) {
+      // Opcional: definir un conjunto de caracteres japoneses personalizado
+      const japaneseChars =
+        "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
+      /* const japaneseChars =
         "アァカサタナハマヤ"; */
 
-    textScramble(greetingElement, {
-      duration: 1.2, // Una duración más larga para un efecto más dramático
-      speed: 0.05,
-      characterSet: japaneseChars,
-      delay: 1,
-    });
-  }
-</script>
+      textScramble(greetingElement, {
+        duration: 1.2, // Una duración más larga para un efecto más dramático
+        speed: 0.05,
+        characterSet: japaneseChars,
+        delay: 1,
+      });
+    }
+  </script>
+</Layout>
