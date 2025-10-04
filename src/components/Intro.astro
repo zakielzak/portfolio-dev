@@ -51,8 +51,11 @@ import { spring } from "motion";
   <!-- — Web & Software Developer. -->
   <!-- </h1> -->
   <div
-    id="greeting-text"
     class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
+    data-scramble
+    data-scramble-duration="1.2"
+    data-scramble-delay="1"
+    data-scramble-tick-rate="4"
   >
     <h1 class="font-sharetech">Hi there,</h1>
     <h2 class="font-vcr">here Juan</h2>
@@ -62,3 +65,9 @@ import { spring } from "motion";
     {m.intro()}
   </p>
 </section>
+<!-- <script>
+  import { initScrambleOnView } from "../lib/ScrambleOnView.ts";
+
+  initScrambleOnView();
+</script>
+ -->

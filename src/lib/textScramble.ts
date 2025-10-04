@@ -1,59 +1,128 @@
-import { animate } from "motion";
+import { animate, delay as motionDelay, inView } from "motion";
 
-export function textScramble(
-  element: HTMLElement,
-  options: {
-    duration?: number;
-    speed?: number;
-    characterSet?: string;
-    delay?: number; // Nuevo parámetro para el retraso
-  } = {}
-): void {
+type ScrambleOptions = {
+  duration?: number;
+  speed?: number;
+  characterSet?: string;
+  delay?: number;
+  tickRate?: number;
+  once?: boolean;
+};
+
+const DEFAULTS = {
+  duration: 2,
+  speed: 0.05,
+  characterSet:
+    "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン",
+  delay: 0,
+  tickRate: 3,
+  once: true,
+};
+
+const reducedMotion = (): boolean =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+export function textScramble(el: HTMLElement, opts: ScrambleOptions = {}) {
   const {
-    duration = 2,
-    speed = 0.05,
-    characterSet = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリ",
-    delay = 0, // Valor por defecto: sin retraso
-  } = options;
+    duration = DEFAULTS.duration,
+    speed = DEFAULTS.speed,
+    characterSet = DEFAULTS.characterSet,
+    delay = DEFAULTS.delay,
+    tickRate = DEFAULTS.tickRate,
+  } = opts;
 
-  const originalText = element.textContent || "";
-  const totalSteps = Math.floor(duration / speed);
+  const originalText = el.textContent ?? "";
+  if (!originalText.trim()) return { stop: () => {} };
+  if (reducedMotion()) {
+    el.textContent = originalText;
+    return { stop: () => {} };
+  }
 
-  // Función que inicia la animación después del delay
-  const startAnimation = () => {
-    animate(0, totalSteps, {
-      duration: duration,
+  const steps = Math.floor(duration / speed);
+  if (steps <= 0) {
+    el.textContent = originalText;
+    return { stop: () => {} };
+  }
+
+  let anim: ReturnType<typeof animate> | null = null;
+  let tCancel: (() => void) | null = null;
+  const lastChar: string[] = Array(originalText.length).fill("");
+
+  const start = () => {
+    el.setAttribute("aria-busy", "true");
+    anim = animate(0, steps, {
+      duration,
       ease: "linear",
-      onUpdate: (latestProgressStep: number) => {
-        const currentStep = Math.floor(latestProgressStep);
-        let scrambledText = "";
-        const progress = currentStep / totalSteps;
+      onUpdate: (latest: number) => {
+        const curr = Math.floor(latest);
+        const ratio = curr / steps;
+        const scrambleNow = curr % tickRate === 0;
 
+        let out = "";
         for (let i = 0; i < originalText.length; i++) {
-          if (originalText[i] === " ") {
-            scrambledText += " ";
+          const ch = originalText[i];
+          if (ch === " " || ch === "\n") {
+            out += ch;
             continue;
           }
-
-          if (progress * originalText.length > i) {
-            scrambledText += originalText[i];
+          if (ratio * originalText.length > i) {
+            out += ch;
           } else {
-            scrambledText +=
-              characterSet[Math.floor(Math.random() * characterSet.length)];
+            let scrambled = lastChar[i];
+            if (scrambleNow) {
+              scrambled =
+                characterSet[Math.floor(Math.random() * characterSet.length)];
+              lastChar[i] = scrambled;
+            }
+            out += scrambled;
           }
         }
-        element.textContent = scrambledText;
+        el.textContent = out;
       },
       onComplete: () => {
-        element.textContent = originalText;
+        el.textContent = originalText;
+        el.setAttribute("aria-busy", "false");
       },
     });
   };
 
-  // Aplicar el delay si es necesario
-  if (delay > 0) {
-    setTimeout(startAnimation, delay * 1000); // Convertir a milisegundos
-  } else {
-    startAnimation();
-  }
+  if (delay > 0) tCancel = motionDelay(start, delay);
+  else start();
+
+  return {
+    stop: () => {
+      if (tCancel) tCancel();
+      if (anim) anim.stop();
+      el.textContent = originalText;
+      el.setAttribute("aria-busy", "false");
+    },
+  };
 }
+
+export function initScramble(root: Document | HTMLElement = document): void {
+  const nodes = root.querySelectorAll<HTMLElement>("[data-scramble]");
+  if (!nodes.length) return;
+
+  nodes.forEach((el) => {
+    const opts: ScrambleOptions = {
+      duration: Number(el.dataset.scrambleDuration) || undefined,
+      speed: Number(el.dataset.scrambleSpeed) || undefined,
+      characterSet: el.dataset.scrambleChars || undefined,
+      delay: Number(el.dataset.scrambleDelay) || undefined,
+      tickRate: Number(el.dataset.scrambleTickRate) || undefined,
+      once: el.dataset.scrambleOnce !== "false",
+    };
+
+    inView(
+      el,
+      () => {
+         const {stop} = textScramble(el as HTMLElement, opts);
+         return opts.once ? () => {} : () => stop();
+      },
+      { margin: "0px 0px -15% 0px", amount: 0.4 }
+    );
+  });
+}
+
+typeof window !== "undefined" && initScramble();

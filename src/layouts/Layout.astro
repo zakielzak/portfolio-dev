@@ -51,12 +51,15 @@ const { title, lang } = Astro.props;
       }
     </script>
   </head>
+  <script>
+    import  "../lib/textScramble"; 
+  </script>
   <body class="text-black/80 dark:text-white/80 bg-white/ dark:bg-black/">
     <ModeWatcher client:load />
 
     <Header />
 
-    <main class="w-full max-w-[1000px] mx-auto pt-32 px-10 relative ">
+    <main class="w-full max-w-[1000px] mx-auto pt-32 px-10 relative">
       <slot />
     </main>
 

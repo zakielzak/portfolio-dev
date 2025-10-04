@@ -4,7 +4,7 @@ import Layout from "../layouts/Layout.astro";
 import Intro from "../components/Intro.astro";
 import ProjectCard from "src/components/ProjectCard.astro";
 import Profile from "src/components/Profile.astro";
-import AnimateOnScroll from "src/components/AnimateOnScroll.svelte";
+
 
 import type { TechID } from "../const";
 import { m } from "../paraglide/messages";
@@ -89,61 +89,54 @@ const projects = [
 
     const projects = document.querySelectorAll<HTMLElement>(".project-item");
 
- 
-      // 1. Selectores de las secciones a animar.
-      // Asegúrate de que tus componentes Intro y Profile tengan estos ID/clases.
-      const sectionSelectors = [
-        "#intro-section",
-        "#profile-section",
-      ];
+    // 1. Selectores de las secciones a animar.
+    // Asegúrate de que tus componentes Intro y Profile tengan estos ID/clases.
+    const sectionSelectors = ["#intro-section", "#profile-section"];
 
-      // 2. Opciones y Parámetros de la Animación
-      const INITIAL_Y_OFFSET = 50; // Desplazamiento inicial (abajo)
-      const DURATION = 0.8; // Duración de la animación en segundos
-      const EASE = [0.17, 0.55, 0.55, 1]; // Curva de easing premium (easeInOutQuart)
+    // 2. Opciones y Parámetros de la Animación
+    const INITIAL_Y_OFFSET = 50; // Desplazamiento inicial (abajo)
+    const DURATION = 0.8; // Duración de la animación en segundos
+    const EASE = [0.17, 0.55, 0.55, 1]; // Curva de easing premium (easeInOutQuart)
 
-      sectionSelectors.forEach((selector) => {
-        const section = document.querySelector(selector);
+    sectionSelectors.forEach((selector) => {
+      const section = document.querySelector(selector);
 
-        if (!section) {
-          console.warn(
-            `Sección no encontrada: ${selector}. Saltando animación.`
+      if (!section) {
+        console.warn(`Sección no encontrada: ${selector}. Saltando animación.`);
+        return;
+      }
+
+      // --- Configuración de Estado Inicial (Cero Duración) ---
+      // Aplicamos el estado de 'origen' de la animación inmediatamente, sin transición.
+      animate(section, { opacity: 0, y: INITIAL_Y_OFFSET }, { duration: 0 });
+
+      // --- Detección y Disparo con inView ---
+      inView(
+        section,
+        (element) => {
+          // El callback se ejecuta cuando el elemento entra en la vista.
+
+          // Animación de entrada: de (opacity: 0, y: 50) a (opacity: 1, y: 0)
+          animate(
+            element,
+            { opacity: 1, transform: "translateY(0px)" },
+            {
+              duration: DURATION,
+              easing: EASE,
+            }
           );
-          return;
+
+          // LA CLAVE: No devolver nada; la animación se ejecuta solo una vez si inView está configurado correctamente.
+        },
+        {
+          // Opciones del Intersection Observer interno:
+          // Margen que dispara la animación antes de que la sección esté totalmente visible.
+          // -15% significa que la intersección se considera cuando el elemento está a 15% del borde inferior.
+          margin: "0px 0px -15% 0px",
+          // amount: "some" (predeterminado) es suficiente para un efecto de aparición.
         }
-
-        // --- Configuración de Estado Inicial (Cero Duración) ---
-        // Aplicamos el estado de 'origen' de la animación inmediatamente, sin transición.
-        animate(section, { opacity: 0, y: INITIAL_Y_OFFSET }, { duration: 0 });
-
-        // --- Detección y Disparo con inView ---
-        inView(
-          section,
-          (element) => {
-            // El callback se ejecuta cuando el elemento entra en la vista.
-
-            // Animación de entrada: de (opacity: 0, y: 50) a (opacity: 1, y: 0)
-            animate(
-              element,
-              { opacity: 1, transform: "translateY(0px)" },
-              {
-                duration: DURATION,
-                easing: EASE,
-              }
-            );
-
-            // LA CLAVE: No devolver nada; la animación se ejecuta solo una vez si inView está configurado correctamente.
-          },
-          {
-            // Opciones del Intersection Observer interno:
-            // Margen que dispara la animación antes de que la sección esté totalmente visible.
-            // -15% significa que la intersección se considera cuando el elemento está a 15% del borde inferior.
-            margin: "0px 0px -15% 0px",
-            // amount: "some" (predeterminado) es suficiente para un efecto de aparición.
-          }
-        );
-      });
- 
+      );
+    });
 
     projects.forEach((project) => {
       const scrollOptions = {
@@ -180,39 +173,6 @@ const projects = [
       }, scrollOptions as any);
     });
 
-    import { textScramble } from "../lib/textScramble.ts";
-
-    const greetingElement = document.getElementById("greeting-text");
-    const introElement = document.getElementById("intro-text");
-
-    if (introElement) {
-      // Opcional: definir un conjunto de caracteres japoneses personalizado
-      const japaneseChars =
-        "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
-      /* const japaneseChars =
-        "アァカサタナハマヤ"; */
-
-      textScramble(introElement, {
-        duration: 1.2, // Una duración más larga para un efecto más dramático
-        speed: 0.05,
-        characterSet: japaneseChars,
-        delay: 2.5,
-      });
-    }
-
-    if (greetingElement) {
-      // Opcional: definir un conjunto de caracteres japoneses personalizado
-      const japaneseChars =
-        "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン";
-      /* const japaneseChars =
-        "アァカサタナハマヤ"; */
-
-      textScramble(greetingElement, {
-        duration: 1.2, // Una duración más larga para un efecto más dramático
-        speed: 0.05,
-        characterSet: japaneseChars,
-        delay: 1,
-      });
-    }
+  
   </script>
 </Layout>
