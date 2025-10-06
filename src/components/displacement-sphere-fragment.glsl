@@ -39,21 +39,15 @@ varying float noise;
 
 void main() {
 
-	#include <clipping_planes_fragment>
+  #include <clipping_planes_fragment>
+  
+  float intensity = max(vUv.x, vUv.y) * (0.2 - 2.0 * noise);
+  vec3 BASE_GRAY = vec3(0.1, 0.1, 0.1); 
+  vec3 color = vec3(intensity);
+  vec3 finalColors = BASE_GRAY + vec3(color.r * 1.5);
 
-	    float baseIntensity = vUv.y * (0.2 - 2.0 * noise);
-
-   vec3 color = vec3(baseIntensity, baseIntensity, baseIntensity);
-/*   vec3 finalColors = vec3(color.b * 1.5, color.r, color.r); */
-   float finalIntensity = color.r * 0.5 + 0.1;
-    vec3 finalColors = vec3(finalIntensity);
-    float monoDiffuse = cos(finalColors.r * noise * 3.0);
-    // Ajustamos el rango: mapeamos de -1 a 1 (de cos) a un rango más oscuro (ej. 0.0 a 0.4)
-    monoDiffuse = smoothstep(-1.0, 1.0, monoDiffuse); // Suaviza el cos
-    monoDiffuse = mix(0.05, 0.4, monoDiffuse); // Mapea a un rango oscuro de 0.05 a 0.4 (aproximadamente)
-                                               // Este mix es crucial para el bajo contraste y oscuridad.
-    
-    vec4 diffuseColor = vec4(vec3(monoDiffuse), 1.0); // Forzamos el color difuso a ser gris
+  
+  vec4 diffuseColor = vec4(cos(finalColors * noise * 2.7), 1.0);
   ReflectedLight reflectedLight = ReflectedLight(vec3(0.0), vec3(0.0), vec3(0.0), vec3(0.0));
   vec3 totalEmissiveRadiance = emissive;
 

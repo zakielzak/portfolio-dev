@@ -6,7 +6,6 @@ import "@fontsource-variable/figtree";
 
 import Header from "src/components/Header.astro";
 import Footer from "src/components/Footer.astro";
-import DisplacementSphere from "src/components/DisplacementSphere.svelte";
 
 import { ModeWatcher } from "mode-watcher";
 import "../styles/global.css";
@@ -74,17 +73,13 @@ const { title, lang } = Astro.props;
       ];
     };
   </script>
-  <body class="text-black/80 dark:text-white/80 bg-white/ dark:bg-black/">
-    <DisplacementSphere
-      client:load
-      theme={"dark"}
-      media={{ mobile: 480, tablet: 992 }}
-    />
+  <body class="text-black/80 dark:text-white/80 bg-white/ dark:bg-black/ overflow-hidden">
+    
     <ModeWatcher client:load />
 
     <Header />
 
-    <main class="w-full max-w-[1000px] mx-auto pt-32 px-10 relative">
+    <main class="w-full max-w-[1000px] mx-auto pt-32 px-10 relative overflow-hidden">
       <slot />
     </main>
 
@@ -101,6 +96,7 @@ const { title, lang } = Astro.props;
     html,
     body {
       margin: 0;
+      padding: 0;
       width: 100%;
       height: 100%;
     }

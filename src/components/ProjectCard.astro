@@ -112,7 +112,24 @@ import { Button } from "$lib/components/ui/button";
       </div>
     </div>
     <div class="flex-1/9 flex flex-col gap-6">
-      <div class="rounded-sm w-full h-full"></div>
+      <div
+        class="rounded-sm w-full h-full overflow-hidden flex flex-col justify-center gap-2"
+      >
+        <div class="rounded-sm border h-56">
+          <img
+            src={/* `/assets/projects/project_${index}.png` */ "https://cdn.prod.website-files.com/6752ffb0df2974a0b81c85e8/6752ffb0df2974a0b81c86ac_Container-p-1080.png"}
+            alt={title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <div class="rounded-sm border h-56">
+          <img
+            src={/* `/assets/projects/project_${index}.png` */ "https://cdn.prod.website-files.com/6752ffb0df2974a0b81c85e8/6752ffb0df2974a0b81c86ac_Container-p-1080.png"}
+            alt={title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
       <div class="flex items-center justify-end mt-auto gap-2 flex-wrap">
         {
           techStack.map((id) => {

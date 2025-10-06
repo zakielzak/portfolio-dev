@@ -9,22 +9,18 @@
     Object3D,
   } from 'three';
   
-  // Utilidades (debes asegurarte que $lib/threeUtils exista y contenga throttle)
   import { cleanRenderer, cleanScene, removeLights, throttle } from '../lib/three';
   
   // Shaders
   import fragmentShader from './displacement-sphere-fragment.glsl?raw';
   import vertexShader from './displacement-sphere-vertex.glsl?raw';
 
-  // --- STORES (Sustituto de useSpring para la rotación) ---
   const rotationX = writable(0);
   const rotationY = writable(0);
 
-  // --- PROPS ---
   export let theme: 'light' | 'dark' = 'dark';
   export let media: { mobile: number; tablet: number };
 
-  // --- REFERENCIAS DE THREE.JS ---
   let canvasRef: HTMLCanvasElement;
   let renderer: WebGLRenderer;
   let camera: PerspectiveCamera;
@@ -35,7 +31,7 @@
   let geometry: SphereGeometry;
   let sphere: Mesh;
 
-  // --- ESTADO REACTIVO Y DE CONTROL ---
+
   let reduceMotion = false;
   let isInViewport = false;
   let windowSize = { width: 0, height: 0 };
@@ -43,11 +39,11 @@
   const start = Date.now();
   let onMouseMove: ((event: MouseEvent) => void) | undefined;
   
-  // Función para inicializar Three.js (puede ser llamada de nuevo si el contexto se pierde)
+  // Three.js 
   const initThree = () => {
     const { innerWidth, innerHeight } = window;
     
-    // 1. Renderer
+    // Renderer
     renderer = new WebGLRenderer({ 
       canvas: canvasRef, antialias: false, alpha: true,
       powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true,
@@ -56,12 +52,12 @@
     renderer.setPixelRatio(1);
     renderer.outputColorSpace = LinearSRGBColorSpace; 
 
-    // 2. Camera y Scene
+    // Camera & Scene
     camera = new PerspectiveCamera(54, innerWidth / innerHeight, 0.1, 100);
     camera.position.z = 52; 
     scene = new Scene(); 
 
-    // 3. Material y Shaders
+    // Material & Shaders
     material = new MeshPhongMaterial();
     material.onBeforeCompile = shader => { 
       uniforms = UniformsUtils.merge([ 
@@ -73,20 +69,16 @@
       shader.fragmentShader = fragmentShader; 
     }; 
 
-    // 4. Geometría y Malla
     geometry = new SphereGeometry(32, 128, 128); 
     sphere = new Mesh(geometry, material); 
     sphere.position.z = 0; 
     (sphere as Object3D & { modifier?: number }).modifier = Math.random(); 
     scene.add(sphere);
 
-    // 🔑 CLAVE: Forzar el primer render para ejecutar onBeforeCompile y llenar 'uniforms'
+  
     renderer.render(scene, camera);
   }
 
-  // -----------------------------------------------------------------
-  // 🛠️ FUNCIÓN DE ANIMACIÓN
-  // -----------------------------------------------------------------
   const animateLoop = () => { 
     if (!sphere || !uniforms || !renderer || !camera) {
         cancelAnimationFrame(animationFrame);
@@ -95,7 +87,7 @@
 
     uniforms.time.value = 0.00005 * (Date.now() - start); 
 
-    sphere.rotation.z += 0.0006; 
+    sphere.rotation.z += 0.0003; 
     sphere.rotation.x = $rotationX; 
     sphere.rotation.y = $rotationY; 
 
@@ -103,19 +95,15 @@
     animationFrame = requestAnimationFrame(animateLoop); 
   }; 
 
-  // -----------------------------------------------------------------
-  // $ REACCIONES REACTIVAS
-  // -----------------------------------------------------------------
 
-  // 1. Luces / Tema (CORRECCIÓN: Se crean siempre que scene exista)
   $: {
     if (scene) { 
         if (lights.length > 0) {
             removeLights(lights);
         }
         
-        const dirLightIntensity = theme === 'light' ? 1.8 : 2.0;
-        const ambientLightIntensity = theme === 'light' ? 2.7 : 0.4;
+        const dirLightIntensity = theme === 'light' ? 1.5 : 2.0;
+        const ambientLightIntensity = theme === 'light' ? 2.4 : 0.5;
 
         const dirLight = new DirectionalLight(0xffffff, dirLightIntensity);
         const ambientLight = new AmbientLight(0xffffff, ambientLightIntensity);
@@ -129,7 +117,7 @@
     }
   }
 
-  // 2. Resize / Posición de Esfera
+  // Position
   $: {
     if (renderer && camera && sphere && windowSize.width && media) {
       const { width, height } = windowSize;
@@ -139,7 +127,6 @@
       camera.aspect = width / adjustedHeight;
       camera.updateProjectionMatrix();
 
-      // Ajuste de posición (Media Queries)
       if (width <= media.mobile) {
         sphere.position.x = 14; sphere.position.y = 10;
       } else if (width <= media.tablet) {
@@ -154,8 +141,8 @@
     }
   }
 
-  // 3. Mouse Move
-  $: {
+  // Mouse Move
+ /*  $: {
     if (typeof window !== 'undefined') {
       if (onMouseMove) window.removeEventListener('mousemove', onMouseMove);
       
@@ -172,9 +159,9 @@
         window.addEventListener('mousemove', onMouseMove);
       }
     }
-  }
+  } */
 
-  // 4. Loop de Animación (CORRECCIÓN VITAL: Iniciar/Detener)
+  // Loop 
   $: {
     if (sphere && uniforms && renderer) {
         if (!reduceMotion && isInViewport) {
@@ -182,7 +169,6 @@
             animateLoop(); // Inicia el loop
         } else {
             cancelAnimationFrame(animationFrame); 
-            // Renderiza un frame estático si está dentro, pero con movimiento reducido
             if (reduceMotion && renderer && scene && camera) {
                 renderer.render(scene, camera);
             }
@@ -190,17 +176,11 @@
     }
   }
 
-  // -----------------------------------------------------------------
-  // 🏁 CICLO DE VIDA (onMount / onDestroy)
-  // -----------------------------------------------------------------
-
   onMount(() => {
-    // 1. Setup inicial y Reduced Motion
     if (typeof window !== 'undefined') {
       reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
-    // 2. Manejo de Contexto Perdido
     const handleContextLost = (event: Event) => {
         event.preventDefault(); 
         console.error("WebGL Context Lost. Resources cleaned up.");
@@ -208,7 +188,6 @@
     };
     canvasRef.addEventListener('webglcontextlost', handleContextLost);
 
-    // 3. Observers de ventana y vista
     const handleResize = () => {
       windowSize = { width: window.innerWidth, height: window.innerHeight };
     };
@@ -220,10 +199,8 @@
     });
     observer.observe(canvasRef);
     
-    // 4. Inicialización de Three.js
     initThree();
     
-    // Disparar la lógica de luces y posición inicial por reactividad
     theme = theme; 
     windowSize = windowSize; 
 
@@ -243,15 +220,10 @@
 <canvas 
     bind:this={canvasRef} 
     aria-hidden="true"
-    class="w-full h-full absolute top-0 left-0 pointer-events-none" 
+    class="absolute inset-0 pointer-events-none" 
 >
 </canvas>
 
 <style>
-  canvas {
-    z-index: -1; 
-    min-height: 100vh;
-    display: block;
-    touch-action: none;
-  }
+  
 </style>

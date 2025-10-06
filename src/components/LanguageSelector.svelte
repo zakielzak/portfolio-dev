@@ -32,7 +32,7 @@
       }
     }}
   >
-    <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5 font-fig">
+    <Select.Trigger class="flex items-center cursor-pointer  duration-300 transition-colors border-none shadow-none px-2.5 gap-1.5 font-fig clip-polygon-shape">
       
         <Languages class="size-5" />
        

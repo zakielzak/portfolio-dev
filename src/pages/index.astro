@@ -5,9 +5,12 @@ import Intro from "../components/Intro.astro";
 import ProjectCard from "src/components/ProjectCard.astro";
 import Profile from "src/components/Profile.astro";
 
-
 import type { TechID } from "../const";
 import { m } from "../paraglide/messages";
+
+// Importar el nuevo componente Svelte
+import Sphere from "../components/Sphere.svelte";
+
 
 const projects = [
   {
@@ -62,6 +65,9 @@ const projects = [
 ];
 ---
 
+
+
+<Sphere client:load  media={{ mobile: 480, tablet: 992 }} />
 <Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
   <Intro />
 
@@ -172,7 +178,5 @@ const projects = [
         );
       }, scrollOptions as any);
     });
-
-  
   </script>
 </Layout>
