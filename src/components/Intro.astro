@@ -40,7 +40,10 @@ import { spring } from "motion";
   }
 </style>
 
-<section class="" id="intro-section">
+<section
+  class="flex flex-col justify-center h-[600px] relative"
+  id="intro-section"
+>
   <!-- Juan Mercedes, Software Developer , Frontend , Backend -->
   <!-- <h1
         id="greeting-text"
@@ -50,7 +53,37 @@ import { spring } from "motion";
         {m.greetings()} -->
   <!-- — Web & Software Developer. -->
   <!-- </h1> -->
+  <div class="relative bottom-20">
+    <h1 class="font-fig text-3xl font-semibold tracking-wide">Hello there,</h1>
+    <h2 class="font-fig text-7xl font-bold tracking-wider">
+      I'm Juan Mercedes
+    </h2>
+    <p id="intro-text" class="text-4xl mt-4 intro-text font-offbit">
+      {m.intro()}.
+    </p>
+  </div>
+
   <div
+    class="cursor-pointer absolute bottom-0 right-[40%] font-vcr text-lg font-semibold flex gap-2 dark:text-white/40 uppercase tracking-widest text-black/40"
+  >
+    scroll down
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-down"
+      ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+        d="M12 5l0 14"></path><path d="M16 15l-4 4"></path><path d="M8 15l4 4"
+      ></path></svg
+    >
+  </div>
+  <!-- <div
     class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
     data-scramble
     data-scramble-duration="1.2"
@@ -63,5 +96,5 @@ import { spring } from "motion";
 
   <p id="intro-text" class="text-xl mt-2 intro-text font-offbit">
     {m.intro()}
-  </p>
+  </p> -->
 </section>

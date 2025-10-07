@@ -87,7 +87,7 @@
 
     uniforms.time.value = 0.00005 * (Date.now() - start); 
 
-    sphere.rotation.z += 0.0003; 
+    sphere.rotation.z += 0.0004; 
     sphere.rotation.x = $rotationX; 
     sphere.rotation.y = $rotationY; 
 
