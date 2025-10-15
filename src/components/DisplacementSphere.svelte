@@ -220,7 +220,7 @@
 <canvas 
     bind:this={canvasRef} 
     aria-hidden="true"
-    class="absolute inset-0 pointer-events-none" 
+    class="absolute inset-0 pointer-events-none select-none -z-10" 
 >
 </canvas>
 

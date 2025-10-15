@@ -11,7 +11,6 @@ import { m } from "../paraglide/messages";
 // Importar el nuevo componente Svelte
 import Sphere from "../components/Sphere.svelte";
 
-
 const projects = [
   {
     label: "MUSIC_PLAYER_APP",
@@ -65,10 +64,8 @@ const projects = [
 ];
 ---
 
-
-
-<Sphere client:load  media={{ mobile: 480, tablet: 992 }} />
 <Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
+  <Sphere client:load media={{ mobile: 480, tablet: 992 }} />
   <Intro />
 
   <section id="projects-section" class="mt-[80px] flex flex-col gap-24">
@@ -95,11 +92,8 @@ const projects = [
 
     const projects = document.querySelectorAll<HTMLElement>(".project-item");
 
-    // 1. Selectores de las secciones a animar.
-    // Asegúrate de que tus componentes Intro y Profile tengan estos ID/clases.
     const sectionSelectors = ["#intro-section", "#profile-section"];
 
-    // 2. Opciones y Parámetros de la Animación
     const INITIAL_Y_OFFSET = 50; // Desplazamiento inicial (abajo)
     const DURATION = 0.8; // Duración de la animación en segundos
     const EASE = [0.17, 0.55, 0.55, 1]; // Curva de easing premium (easeInOutQuart)
@@ -112,17 +106,11 @@ const projects = [
         return;
       }
 
-      // --- Configuración de Estado Inicial (Cero Duración) ---
-      // Aplicamos el estado de 'origen' de la animación inmediatamente, sin transición.
       animate(section, { opacity: 0, y: INITIAL_Y_OFFSET }, { duration: 0 });
 
-      // --- Detección y Disparo con inView ---
       inView(
         section,
         (element) => {
-          // El callback se ejecuta cuando el elemento entra en la vista.
-
-          // Animación de entrada: de (opacity: 0, y: 50) a (opacity: 1, y: 0)
           animate(
             element,
             { opacity: 1, transform: "translateY(0px)" },
@@ -131,15 +119,9 @@ const projects = [
               easing: EASE,
             }
           );
-
-          // LA CLAVE: No devolver nada; la animación se ejecuta solo una vez si inView está configurado correctamente.
         },
         {
-          // Opciones del Intersection Observer interno:
-          // Margen que dispara la animación antes de que la sección esté totalmente visible.
-          // -15% significa que la intersección se considera cuando el elemento está a 15% del borde inferior.
           margin: "0px 0px -15% 0px",
-          // amount: "some" (predeterminado) es suficiente para un efecto de aparición.
         }
       );
     });
@@ -148,13 +130,12 @@ const projects = [
       const scrollOptions = {
         target: project,
         container: document.documentElement,
-        // La animación se ejecuta entre el 80% (entra) y el 20% (sale) del viewport.
         offset: ["start 80%", "end 20%"] as const,
       };
 
       // Parámetros de la animación
-      const MAX_SHRINK = 0.1; // Se encogerá un 10% (Scale irá de 1 a 0.9)
-      const MAX_Y_OFFSET = 50; // Desplazamiento máximo en píxeles (50px)
+      const MAX_SHRINK = 0.1;
+      const MAX_Y_OFFSET = 50;
 
       scroll((progress: number) => {
         const midPointProgress =

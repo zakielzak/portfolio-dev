@@ -54,16 +54,18 @@ import { spring } from "motion";
   <!-- — Web & Software Developer. -->
   <!-- </h1> -->
   <div class="relative bottom-20">
-    <h1 class="font-fig text-3xl font-semibold tracking-wide">Hello there,</h1>
+    <h1 class="font-fig text-3xl font-semibold tracking-wide">
+      <!-- Hello there,  -->{m.greetings} <!-- 👋 -->
+    </h1>
     <h2 class="font-fig text-7xl font-bold tracking-wider">
-      I'm Juan Mercedes
+      <!-- I'm --> {m.name} Juan Mercedes
     </h2>
     <p id="intro-text" class="text-4xl mt-4 intro-text font-offbit">
       {m.intro()}.
     </p>
   </div>
 
-  <div
+ <!--  <div
     class="cursor-pointer absolute bottom-0 right-[40%] font-vcr text-lg font-semibold flex gap-2 dark:text-white/40 uppercase tracking-widest text-black/40"
   >
     scroll down
@@ -82,7 +84,7 @@ import { spring } from "motion";
         d="M12 5l0 14"></path><path d="M16 15l-4 4"></path><path d="M8 15l4 4"
       ></path></svg
     >
-  </div>
+  </div> -->
   <!-- <div
     class="text-xl tracking-wider/ motion-opacity-in-0/ motion-translate-y-in-100/ main-title font-fig"
     data-scramble

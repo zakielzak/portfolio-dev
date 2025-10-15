@@ -2,4 +2,158 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout> Image manager </Layout>
+<Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
+  <section class="font-fig">
+    <h1 class="text-4xl font-bold tracking-tighter mb-4">Image Manager App</h1>
+    <div>
+      <p class="text-lg">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <div>Video Demo</div>
+    </div>
+    <div class="mt-10">
+      <span class="font-bold tracking-tighter text-2xl"
+        >Motivation / Problems</span
+      >
+      <div class="mt-2 flex flex-col gap-4 font-medium">
+        <p>
+          I’ve always been a visual person. That's why I constantly work with
+          images to guide my creativity, whether for design, art, inspirations
+          or visual assets I use in projects. Over the years, my collection of
+          images has grown significantly, and trying to organize them had become
+          a frustrating task that directly affected my creative flow.
+        </p>
+        <p class="text-base">
+          I almost wished there was something like Pinterest, <span
+            class="font-bold"
+            >but built for me: local, private, fast, and designed to create a
+            personalized visual library.</span
+          >
+        </p>
+        <span class="text-xl md:text-lg font-semibold italic leading-snug"
+          >So I asked myself: why not build the tool I needed myself?</span
+        >
+
+        <p>
+          <span class="font-bold">That’s how Alcyon was born</span> — an app designed
+          to preview, organize, and enjoy large image collections, built from my
+          own vision, and crafted for both productivity and visual delight.
+        </p>
+      </div>
+    </div>
+    <div class="mt-10">
+      <span class="font-bold tracking-tighter text-2xl"
+        >Tech I Used — and Why I Chose Them</span
+      >
+      <ul class="list-disc list-inside mt-2 flex flex-col gap-2">
+        <li>
+          HTML, CSS, Typescript -<!--  Al principio, iba a hacer una aplicacion web,
+          pero debido al contexto de que esta aplicacion quiero que este
+          preparada para ser escalable a una aplicacion de alta calidad y que
+          sea de escritorio y movil. Es por esa razon que decidi hacerla una
+          aplicacion de escritorio, utilizando tecnologias web como HTML, CSS,
+          Typescript. -->
+          Decidí usar tecnologías web porque quería que la app pueda escalar, usable
+          tanto en escritorio como en móvil. Fue por eso que al principio iba a ser
+          una aplicacion web, pero esta aplicacion no solo tiene motivos para mostrar
+          mis habilidades, sino Tambien para que sea escalable en un futuro y volverla
+          una aplicacion funcional en el futuro. Por eso decidi convertirla en una
+          aplicacion de escritorio.
+        </li>
+        <li>
+          Rust + Tauri - Originalmente pense en usar electron, pero luego de
+          investigar opte por tauri, que al igual que electron permite hacer
+          aplicaciones con tecnologias web pero usando rust en el backend, lo
+          cual aporta mejor rendimiento y menor consumo de memoria. Ademas, era
+          interesante aprenderlo.
+        </li>
+        <li>
+          React + Tailwind se integraron porque ya los conocia muy bien, lo que
+          ayudaba acelerar el desarrollo y prototipar la UI mas rapido.
+        </li>
+      </ul>
+    </div>
+    <div class="mt-10">
+      <span class="font-bold tracking-tighter text-2xl"
+        >Challenges & Learnings</span
+      >
+      <p>
+        <ul class="flex flex-col gap-2">
+          <li>
+            <span>1. Aprender Rust desde cero</span>
+            <p>
+              Aunque ya tenía experiencia con JavaScript y C#, Rust introduce
+              conceptos como manejo de memoria, ownership, lifetimes, que
+              requieren acostumbrarse. Aprender esos detalles fortaleció mi
+              capacidad técnica.
+            </p>
+          </li>
+          <li>
+            <span>2. Reproducción de audio</span>
+            <p>
+              Tenía dos rutas posibles: usar APIs web (Web Audio API) o hacer
+              procesamiento de audio en el backend con Rust. Elegí el backend
+              Rust, lo que implicó aprender decodificación de audio,
+              conversiones de muestras (“samples”), buffering eficiente, etc.
+            </p>
+          </li>
+          <li>
+            <span>3. Persistencia local / almacenamiento</span>
+            <p>
+              Al importar canciones o almacenar metadata, necesitaba que esos
+              datos sobrevivieran al cerrar la aplicación (offline). Utilicé
+              SQLite mediante un plugin de Tauri, lo que me permitió mantener
+              consistencia a lo largo de sesiones. Esto me obligó a profundizar
+              en SQL, estructura de datos, manejo de sincronización básica.
+            </p>
+          </li>
+          <li>
+            <span>4. Etiquetas (tags) y búsqueda eficiente</span>
+            <p>
+              Implementar un sistema de tags que sea flexible, rápido (filtrado
+              en tiempo real), tolerante a errores (fuzzy matching), y usable en
+              interfaces con bibliotecas grandes.
+            </p>
+          </li>
+          <li>
+            <span>5. Funciones clásicas de reproductor</span>
+            <p>
+              Crear playlists, permitir CRUD de canciones y organizar canciones
+              con tags sin sacrificar rendimiento ni UX. Lograr que la interfaz
+              no se sienta lenta al cargar muchas canciones o imágenes
+              miniaturas.
+            </p>
+          </li>
+        </ul>
+      </p>
+    </div>
+    <div class="mt-10">
+      <span class="font-offbit font-semibold text-2xl">Roadmap / Futuro</span>
+      <p class="text-base mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit vero quos,
+        laboriosam maiores pariatur minima architecto enim ipsam totam cum,
+        voluptatum dolorem! Rerum laudantium atque voluptas sapiente, quam
+        architecto assumenda?
+      </p>
+    </div>
+    <div class="mt-10">
+      <span class="font-offbit font-semibold text-2xl">Outcome / Results</span>
+      <p class="text-base mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit vero quos,
+        laboriosam maiores pariatur minima architecto enim ipsam totam cum,
+        voluptatum dolorem! Rerum laudantium atque voluptas sapiente, quam
+        architecto assumenda?
+      </p>
+    </div>
+
+    <div class="mt-10">
+      <span class="font-offbit font-semibold text-2xl">Try it out</span>
+      <p class="text-base mt-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit vero quos,
+        laboriosam maiores pariatur minima architecto enim ipsam totam cum,
+        voluptatum dolorem! Rerum laudantium atque voluptas sapiente, quam
+        architecto assumenda?
+      </p>
+    </div>
+  </section>
+</Layout>

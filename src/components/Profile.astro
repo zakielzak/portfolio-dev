@@ -46,7 +46,7 @@ const allTechs: TechID[] = [
           data-scramble-once="false"
           data-scramble-duration="1.2"
           data-scramble-tick-rate="3"
-          >Made it this far? Awesome!
+          ><!-- Made it this far? Awesome! --> {m.about_subtitle}
         </span>
         <!-- <div class="w-12 h-1 bg-black/60 rounded-xs"></div> -->
       </div>
@@ -55,9 +55,10 @@ const allTechs: TechID[] = [
         <p
           class="text-xl font-medium tracking-tight text-black/65 dark:text-white/65"
         >
-          <!-- Let me introduce myself: --> I’m Juan Mercedes, a Systems Engineering
+        {m.about_p1}
+          <!-- Let me introduce myself: --> <!-- I’m Juan Mercedes, a Systems Engineering
           student specializing in full-stack web development and UI/UX design. I
-          have around 1.5 years of hands-on experience through personal projects.
+          have around 1.5 years of hands-on experience through personal projects. -->
         </p>
       </div>
       <!-- <a
@@ -74,9 +75,10 @@ const allTechs: TechID[] = [
         <p
           class="text-base font-medium tracking-tight text-black/65 dark:text-white/65 font-fig"
         >
-          In my spare time, you’ll find me playing video games, listening to
+          <!-- In my spare time, you’ll find me playing video games, listening to
           music, or exploring the latest tech trends. I’m always down for
-          hearing about new projects, so feel free to drop me a line.
+          hearing about new projects, so feel free to drop me a line. -->
+          {m.about_p4}
         </p>
         <a
           class="flex gap-2 font-vcr font-black text-lg items-center"
@@ -97,7 +99,8 @@ const allTechs: TechID[] = [
               d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"
             ></path><path d="M6 12h16"></path></svg
           >
-          Send me a message
+          <!-- Send me a message -->
+          {m.contact}
         </a>
       </div>
     </div>
@@ -106,7 +109,7 @@ const allTechs: TechID[] = [
       class="row-span-2 col-start-1 row-start-11 border flex flex-col items-center justify-center gap-1 px-4 rounded-sm shadow-xs"
     >
       <div class="size-4 bg-black dark:bg-white rounded-full"></div>
-      <span class="text-xl font-semibold font-fig">Available for work!</span>
+      <span class="text-xl font-semibold font-fig"><!-- Available for work! --> {m.available}</span>
     </div>
     <div
       class="row-start-13 row-span-2 border flex flex-col items-center justify-center gap-1 px-4 rounded-sm shadow-xs"
@@ -115,7 +118,7 @@ const allTechs: TechID[] = [
     <div
       class="row-span-4 col-start-2 row-start-11 border px-4 py-3.5 text-xs flex flex-col justify-between rounded-sm shadow-xs"
     >
-      <span class="text-lg font-semibold">Connect with me</span>
+      <span class="text-lg font-semibold"><!-- Connect with me --> {m.connect}</span>
 
       <div
         class="flex flex-col gap-1.5 text-sm font-fig font-medium tracking-wide dark:text-white/50 text-black/50"
@@ -244,15 +247,16 @@ const allTechs: TechID[] = [
     >
       <span
         class="text-2xl font-semibold transition-opacity duration-500 ease-in-out group-hover:opacity-0 group-hover:invisible"
-        >"Make it exist first, then improve it."</span
+        >"<!-- Make it exist first, then improve it. -->{m.work_philosopy}"</span
       >
 
       <p
         class="text-xs font-medium flex px-4 items-center justify-center absolute inset-0 opacity-0 transition-all duration-500 ease-in-out group-hover:opacity-100 text-white dark:text-black"
       >
-        I focus on starting with a simple but solid foundation, and then adding
+       <!--  I focus on starting with a simple but solid foundation, and then adding
         value by refining it with details that truly enhance it. This iterative
-        process allows me to work efficiently and deliver high-quality results.
+        process allows me to work efficiently and deliver high-quality results. -->
+        {m.work_philosopy_2}
       </p>
     </div>
   </div>

@@ -2,4 +2,205 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout> Music App </Layout>
+<Layout title="Zakiel" lang={Astro.currentLocale || "en"}>
+  <section class="font-fig">
+    <h1 class="text-4xl font-bold tracking-tighter mb-4">Music App</h1>
+    <div>
+      <p class="text-lg">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </p>
+      <div>Video Demo</div>
+    </div>
+
+    <div class="mt-10">
+      <span class="font-bold tracking-tighter text-2xl">Why I Built This </span>
+      <div class="mt-2 flex flex-col gap-4 font-medium">
+        <p>
+          I love music. It's one of my favorite things in life, and i listen to
+          so many genres that I have over 6,000 songs saved on Spotify...
+        </p>
+        <span class="text-xl md:text-lg font-semibold italic leading-snug"
+          >Well...</span
+        >
+        <p class="text-base">
+          I realized there was no easy way to navigate my own library or find
+          the right songs for a specific moment. I missed a tag-based system to
+          search quickly by mood, genre or context.
+        </p>
+        <span class="text-xl md:text-lg font-semibold italic leading-snug"
+          >So I decided to build my own music app.</span
+        >
+        <p>
+          I wanted it to be fast, functional, and minimal — a player that could
+          import local songs, organize them with tags, and search by mood or
+          genre without sacrificing performance or UX.
+        </p>
+      </div>
+    </div>
+    <div class="mt-10">
+      <span class="font-bold tracking-tighter text-2xl"
+        >Tech I Used — and Why I Chose Them</span
+      >
+      <div class="list-disc list-inside mt-2 flex flex-col gap-4">
+        <div class="flex flex-col gap-2 font-medium text-base mt-4">
+          <h3 class="text-lg font-semibold">🧱 HTML, CSS, Typescript</h3>
+
+          <p class="mb-2">
+            I chose modern web technologies to ensure scalability and
+            maintainability beyond a simple prototype. My goal was to build a
+            foundation that could evolve into a high-quality desktop and mobile
+            music application.
+          </p>
+          <p class="mb-4">
+            This decision allowed me to focus on creating the <span
+              class="font-bold">music player I always wanted</span
+            > — elegant, fast, and responsive.
+          </p>
+
+          <!-- when it was just a personal project -->
+          <!-- But given the context
+          that I wanted this app to be scalable to a high-quality desktop and  -->
+        </div>
+        <div class="flex flex-col gap-2 font-medium text-base">
+          <h3 class="text-lg font-semibold">🦀 Rust + Tauri</h3>
+          <p class="mb-2">
+            At first, I considered Electron. However, after deeper research, I
+            decided to use <span class="font-bold">Tauri</span>, which provides
+            the same ability to build desktop applications with web
+            technologies, but with much greater efficiency.
+          </p>
+          <p class="mb-2">
+            Tauri relies on the system’s native WebView instead of bundling
+            Chromium, resulting in smaller build sizes, lower memory
+            consumption, and faster startup times.
+          </p>
+          <p class="mb-2">
+            By using <span class="font-semibold">Rust</span> for the backend, I gained
+            hands-on experience with systems-level programming. I learned about memory
+            safety, concurrency, and efficient audio decoding, which directly improved
+            the app's performance and reliability, while broadening my technical
+            depth as a developer.
+          </p>
+          <p class="mb-4">
+            Learning Rust was genuinely exciting — It challenged me to think
+            differently about performance, safety, and system-level design.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 font-medium text-base">
+          <h3 class="text-lg font-semibold">⚛️ React + Tailwind</h3>
+          <p class="mb-2">
+            Since I’m very comfortable with both, <span class="font-semibold"
+              >React</span
+            > and
+            <span class="font-semibold">Tailwind CSS</span> were the perfect combination
+            to build the interface quickly and efficiently.
+          </p>
+          <p class="mb-4">
+            This combination allowed me to rapidly prototype, test ideas, and
+            achieving a polished design that reflects my personal design
+            standards.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <span class="font-bold tracking-tight text-2xl"
+        >Challenges & Learnings</span
+      >
+      <div class="flex flex-col gap-6 font-medium">
+        <div class="flex flex-col gap-2 mt-6">
+          <h3 class="font-semibold text-lg">1. Learning Rust from Scratch</h3>
+          <p class="mb-2">
+            <span class="font-semibold italic">Challenge:</span> Although I already
+            had experience with JavaScript and C#, Rust introduces new concepts like
+            ownership, borrowing, lifetimes, and explicit memory management — all
+            very different from what I was used to. It required a significant learning
+            curve.
+          </p>
+          <p class="mb-2">
+            <span class="font-semibold italic">How I approached it:</span> I studied
+            the official Rust book, completed practical exercises, and reimplemented
+            parts of the audio playback system to understand how memory safety and
+            error handling work at a low level.
+          </p>
+          <p class="mb-4">
+            <span class="font-semibold italic">What I learned / Result:</span>
+            I developed confidence in writing low-level code and achieved a solid
+            understanding of Rust. This allowed me to build efficient and safe backend
+            systems that serve as the foundation of this music player.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <h3 class="font-semibold text-lg">2. Audio Playback</h3>
+          <p class="mb-2">
+            <span class="font-semibold italic">Challenge:</span> Designing a player
+            capable of stable and low-latency audio playback, even when managing
+            large local music libraries. Achieving a balance between performance,
+            responsiveness, and reliability was the main goal.
+          </p>
+          <p class="mb-2">
+            <span class="font-semibold italic">How I approached it:</span> I evaluated
+            two approaches: implementing playback through the Web Audio API or delegating
+            it entirely to a Rust backend. I ultimately chose Rust because it provided
+            deeper control and better performance in the long run. Implementing a
+            custom audio backend required low-level handling: decoding formats, sample
+            conversion, efficient buffering, and synchronization strategies while
+            keeping the React UI smooth and responsive.
+          </p>
+          <p class="mb-4">
+            <span class="font-semibold italic">What I learned / Result:</span>
+            I gained a solid understanding of low-level audio processing and input/output
+            optimization. The final result was a fast, reliable, and responsive playback
+            system that matched the performance and quality I envisioned for the
+            application.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <h3 class="font-semibold text-lg">3. Core Player Features</h3>
+          <p class="mb-2">
+            <span class="font-semibold italic">Challenge:</span> Implementing essential
+            features such as playlists, CRUD operations for songs, playback queues,
+            thumbnails, and tag-based search—without compromising responsiveness
+            as the music library size increased.
+          </p>
+          <p class="mb-2">
+            <span class="font-semibold italic">How I approached it:</span> I implemented
+            the logic for each feature, list virtualization, lazy thumbnail loading,
+            asynchronous I/O, and an efficient tag-based search engine. My approach
+            was to ensure solid core logic first, then refine the design for a polished,
+            intuitive user experience.
+          </p>
+          <p class="mb-4">
+            <span class="font-semibold italic">What I learned / Result:</span>
+            The player maintains smooth performance even with extensive libraries.
+            Core features such as playlist management, tag editing, and real-time
+            search perform consistently and efficiently, achieving the balance between
+            technical robustness and user experience I aimed for.
+          </p>
+        </div>
+      </div>
+
+      <!-- <div class="mt-10">
+        <span class="font-bold tracking-tighter text-2xl">Roadmap / Future</span
+        >
+        <div class="mt-2 flex flex-col gap-4 font-medium"></div>
+      </div> -->
+      <div class="mt-10">
+        <span class="font-bold tracking-tighter text-2xl"
+          >App Demo & Screenshots</span
+        >
+        <p>Tip: click the image to make it full screen</p>
+        <div class="mt-2 flex flex-col gap-4 font-medium"></div>
+      </div>
+
+      <div class="mt-10">
+        <span class="font-bold tracking-tighter text-2xl">Try it out!</span>
+        <p class="text-base mt-2 font-medium">
+          The app is still in state prototype, but if you want to check it out,
+          you can download the lastest build.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,6 +1,7 @@
 ---
 import type { TechID } from "../const";
 import { TECHS } from "../const";
+import { m } from "../paraglide/messages";
 
 interface Props {
   index: number;
@@ -28,7 +29,7 @@ import { Button } from "$lib/components/ui/button";
 ---
 
 <div
-  class="h-[600px] z-30 bg-background  border rounded-xs px-6 pb-6 pt-4 flex flex-col project-item"
+  class="h-[600px] z-30 bg-background border rounded-xs px-6 pb-6 pt-4 flex flex-col project-item"
 >
   <div
     class="shrink-0 text-lg font-vcr flex gap-4 items-center justify-between uppercase"
@@ -58,7 +59,8 @@ import { Button } from "$lib/components/ui/button";
           class="cursor-pointer clip rounded-none text-lg font-fig font-semibold bg-black dark:bg-white tracking-wide px-8 py-6 flex-1 transition duration-300 hover:scale-[1.09] active:scale-[0.98]"
           href={caseStudyHref}
         >
-          Case study
+          <!--  Case study -->
+          {m.case_study}
           <!-- <Icon name="arrow-right" /> -->
 
           <div>
